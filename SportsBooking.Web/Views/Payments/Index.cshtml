@@ -1,0 +1,26 @@
+@model IEnumerable<Payment>
+@{ ViewData["Title"] = "Плащания"; }
+<div class="page-heading"><h1>Плащания</h1><a asp-action="Create" class="btn primary">+ Добави</a></div>
+<div class="table-scroll">
+    <table>
+        <thead><tr><th>№ резервация</th>
+<th>Сума (EUR)</th>
+<th>Начин на плащане</th><th>Действия</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.BookingID</td>
+<td>@item.Amount.ToString("F2")</td>
+<td>@item.PaymentMethod</td>
+                <td class="actions">
+                    <a asp-action="Details" asp-route-id="@item.PaymentID">Преглед</a>
+                    <a asp-action="Edit" asp-route-id="@item.PaymentID">Редакция</a>
+                    <a class="danger-text" asp-action="Delete" asp-route-id="@item.PaymentID">Изтриване</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+@if (!Model.Any()) { <p class="empty">Все още няма записи.</p> }

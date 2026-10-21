@@ -1,0 +1,25 @@
+@model Field
+<div class="field">
+    <label asp-for="FieldName"></label>
+    <input asp-for="FieldName" type="text" class="input" />
+    <span asp-validation-for="FieldName" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="CenterID"></label>
+    <select asp-for="CenterID" asp-items="ViewBag.Centers" class="input">
+        <option value="0">-- Изберете --</option>
+    </select>
+    <span asp-validation-for="CenterID" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="SportID"></label>
+    <select asp-for="SportID" asp-items="ViewBag.Sports" class="input">
+        <option value="0">-- Изберете --</option>
+    </select>
+    <span asp-validation-for="SportID" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="PricePerHour"></label>
+    <input asp-for="PricePerHour" type="number" min="0.01" max="999999.99" step="0.01" class="input" />
+    <span asp-validation-for="PricePerHour" class="validation"></span>
+</div>

@@ -1,0 +1,30 @@
+@model IReadOnlyList<SportsBooking.Web.ViewModels.RoleUserRow>
+@{ ViewData["Title"] = "Роли и достъп"; }
+<div class="page-heading"><h1>Роли и достъп</h1></div>
+<p class="muted">Само администратор може да променя роли. Не можете да променяте собствената си роля.</p>
+<div class="table-scroll"><table>
+<thead><tr><th>Имейл на акаунта</th><th>Текуща роля</th><th>Нова роля</th></tr></thead>
+<tbody>
+@foreach (var row in Model)
+{
+<tr>
+    <td>@row.Email @if (row.IsCurrentUser) { <small>(текущ акаунт)</small> }</td>
+    <td>@row.CurrentRole</td>
+    <td>
+    @if (!row.IsCurrentUser)
+    {
+        <form asp-action="Update" method="post" class="role-form">
+            <input type="hidden" name="id" value="@row.Id" />
+            <select class="input" name="role" aria-label="Изберете роля за @row.Email">
+                <option selected="@(row.CurrentRole == "User")" value="User">User</option>
+                <option selected="@(row.CurrentRole == "Manager")" value="Manager">Manager</option>
+                <option selected="@(row.CurrentRole == "Admin")" value="Admin">Admin</option>
+            </select>
+            <button class="btn primary" type="submit">Запази</button>
+        </form>
+    }
+    else { <span class="muted">Заключено</span> }
+    </td>
+</tr>
+}
+</tbody></table></div>

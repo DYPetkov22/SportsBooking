@@ -1,0 +1,26 @@
+@model IEnumerable<User>
+@{ ViewData["Title"] = "Потребители"; }
+<div class="page-heading"><h1>Потребители</h1><a asp-action="Create" class="btn primary">+ Добави</a></div>
+<div class="table-scroll">
+    <table>
+        <thead><tr><th>Име</th>
+<th>Имейл</th>
+<th>Телефон</th><th>Действия</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullName</td>
+<td>@item.Email</td>
+<td>@item.Phone</td>
+                <td class="actions">
+                    <a asp-action="Details" asp-route-id="@item.UserID">Преглед</a>
+                    <a asp-action="Edit" asp-route-id="@item.UserID">Редакция</a>
+                    <a class="danger-text" asp-action="Delete" asp-route-id="@item.UserID">Изтриване</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+@if (!Model.Any()) { <p class="empty">Все още няма записи.</p> }

@@ -1,0 +1,45 @@
+@model Booking
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+<div class="field">
+    <label asp-for="UserID"></label>
+    <select asp-for="UserID" asp-items="ViewBag.Users" class="input">
+        <option value="0">-- Изберете --</option>
+    </select>
+    <span asp-validation-for="UserID" class="validation"></span>
+</div>
+}
+<div class="field">
+    <label asp-for="FieldID"></label>
+    <select asp-for="FieldID" asp-items="ViewBag.Fields" class="input">
+        <option value="0">-- Изберете --</option>
+    </select>
+    <span asp-validation-for="FieldID" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="BookingDate"></label>
+    <input asp-for="BookingDate" type="date" class="input" />
+    <span asp-validation-for="BookingDate" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="StartTime"></label>
+    <input asp-for="StartTime" type="time" asp-format="{0:HH:mm}" step="60" class="input" />
+    <span asp-validation-for="StartTime" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="EndTime"></label>
+    <input asp-for="EndTime" type="time" asp-format="{0:HH:mm}" step="60" class="input" />
+    <span asp-validation-for="EndTime" class="validation"></span>
+</div>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+<div class="field">
+    <label asp-for="Status"></label>
+    <select asp-for="Status" class="input">
+        <option value="Активна">Активна</option>
+        <option value="Отказана">Отказана</option>
+    </select>
+    <span asp-validation-for="Status" class="validation"></span>
+</div>
+
+}

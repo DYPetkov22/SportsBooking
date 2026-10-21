@@ -1,0 +1,46 @@
+# .NET build output
+**/bin/
+**/obj/
+TestResults/
+**/TestResults/
+*.pdb
+
+# IDE files
+.idea/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local secrets & overrides
+.env
+.env.*
+!.env.example
+**/secrets.json
+**/appsettings.Local.json
+**/appsettings.Development.local.json
+**/appsettings.Production.json
+**/appsettings.Staging.json
+**/launchSettings.local.json
+*.pfx
+*.p12
+*.key
+*.pem
+
+# Databases and machine-specific files
+*.mdf
+*.ldf
+*.bak
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# OS/editor outputs
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp

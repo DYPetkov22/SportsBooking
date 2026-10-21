@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1440" height="900" viewBox="0 0 1440 900">
+<title>04_Резервации</title>
+<rect x="0" y="0" width="1440" height="900" rx="0" fill="#F6F8FC"/>
+<rect x="0" y="0" width="246" height="900" rx="0" fill="#17243D"/>
+<rect x="21" y="30" width="39" height="39" rx="11" fill="#346FE5"/>
+<rect x="31" y="40" width="19" height="19" rx="2" fill="#00000000" stroke="#FFFFFF" stroke-width="1.5"/>
+<line x1="40.5" y1="41" x2="40.5" y2="58" stroke="#FFFFFF" stroke-width="1.3"/>
+<circle cx="40.5" cy="49.5" r="3" fill="#00000000" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="72" y="49.05" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="19" text-anchor="start">SportsBooking</text>
+<text x="73" y="63.55" fill="#A3B5CE" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="9" text-anchor="start">ADMIN PANEL</text>
+<text x="27" y="123.45" fill="#8F9FBA" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="11" text-anchor="start">НАВИГАЦИЯ</text>
+<circle cx="38" cy="171" r="8" fill="#45617F"/>
+<text x="57" y="174.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Начало</text>
+<circle cx="38" cy="224" r="8" fill="#45617F"/>
+<text x="57" y="227.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Игрища</text>
+<rect x="14" y="255" width="218" height="45" rx="10" fill="#243958"/>
+<rect x="14" y="263" width="3" height="29" rx="1" fill="#346FE5"/>
+<circle cx="38" cy="277" r="8" fill="#346FE5"/>
+<text x="57" y="280.3" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Резервации</text>
+<circle cx="38" cy="330" r="8" fill="#45617F"/>
+<text x="57" y="333.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Потребители</text>
+<circle cx="38" cy="383" r="8" fill="#45617F"/>
+<text x="57" y="386.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортове</text>
+<circle cx="38" cy="436" r="8" fill="#45617F"/>
+<text x="57" y="439.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортни центрове</text>
+<circle cx="38" cy="489" r="8" fill="#45617F"/>
+<text x="57" y="492.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Плащания</text>
+<rect x="18" y="752" width="210" height="115" rx="12" fill="#20324F"/>
+<text x="33" y="781.45" fill="#A3B5CE" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="11" text-anchor="start">УЧЕБЕН ПРОЕКТ</text>
+<text x="33" y="804.35" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="13" text-anchor="start">ASP.NET Core MVC</text>
+<text x="33" y="824.4" fill="#B6C5DE" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="12" text-anchor="start">SQL Server · 6 таблици</text>
+<text x="33" y="851.45" fill="#A3B5CE" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="11" text-anchor="start">v1.0 • Демо данни</text>
+<rect x="246" y="0" width="1194" height="87" rx="0" fill="#FFFFFF"/>
+<line x1="246" y1="86" x2="1440" y2="86" stroke="#E3E9F2" stroke-width="1"/>
+<text x="293" y="33.45" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="11" text-anchor="start">УПРАВЛЕНИЕ  /  РЕЗЕРВАЦИИ</text>
+<circle cx="1352" cy="43" r="21" fill="#EAF1FF"/>
+<text x="1353.0" y="46.25" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="15" text-anchor="middle">SB</text>
+<text x="1203" y="47.35" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="13" text-anchor="start">Демо режим</text>
+<text x="294" y="139.55" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="29" text-anchor="start">Резервации</text>
+<text x="295" y="164.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Следи, редактирай и отменяй запазените часове.</text>
+<rect x="1184" y="112" width="210" height="43" rx="11" fill="#346FE5"/>
+<text x="1289.0" y="136.8" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="middle">+ Нова резервация</text>
+<rect x="294" y="204" width="1100" height="633" rx="15" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="323" y="252.0" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="20" text-anchor="start">Всички резервации</text>
+<text x="323" y="280.35" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="13" text-anchor="start">Показани са началните записи в системата.</text>
+<rect x="322" y="313" width="283" height="43" rx="9" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="337" y="337.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Всички статуси    ▾</text>
+<rect x="621" y="313" width="286" height="43" rx="9" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="636" y="337.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Всички игрища    ▾</text>
+<rect x="923" y="313" width="442" height="43" rx="9" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="938" y="337.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">⌕   Търси по клиент...</text>
+<rect x="312" y="391" width="1060" height="44" rx="8" fill="#F1F4F9"/>
+<text x="328" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Потребител</text>
+<text x="520" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Игрище</text>
+<text x="759" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Дата</text>
+<text x="893" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Час</text>
+<text x="1043" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Статус</text>
+<text x="1165" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Действия</text>
+<text x="328" y="465.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Иван Иванов</text>
+<text x="520" y="466.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Футболно игрище 1</text>
+<text x="759" y="466.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">20.10.2026</text>
+<text x="893" y="466.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">18:00–19:00</text>
+<rect x="1041" y="453" width="103" height="27" rx="14" fill="#E8F8F1"/>
+<circle cx="1054" cy="466.5" r="3.2" fill="#20A67A"/>
+<text x="1064" y="468.4" fill="#20A67A" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Активна</text>
+<text x="1165" y="466.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="312" y1="519" x2="1372" y2="519" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1167" y="459" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1180" y="479.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1258" y="459" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1273" y="479.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<text x="328" y="548.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Мария Петрова</text>
+<text x="520" y="549.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Тенис корт 1</text>
+<text x="759" y="549.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">20.10.2026</text>
+<text x="893" y="549.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">17:00–18:00</text>
+<rect x="1041" y="536" width="103" height="27" rx="14" fill="#E8F8F1"/>
+<circle cx="1054" cy="549.5" r="3.2" fill="#20A67A"/>
+<text x="1064" y="551.4" fill="#20A67A" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Активна</text>
+<text x="1165" y="549.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="312" y1="602" x2="1372" y2="602" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1167" y="542" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1180" y="562.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1258" y="542" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1273" y="562.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<text x="328" y="631.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Георги Георгиев</text>
+<text x="520" y="632.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Баскетболно игрище 1</text>
+<text x="759" y="632.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">21.10.2026</text>
+<text x="893" y="632.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">16:00–17:00</text>
+<rect x="1041" y="619" width="103" height="27" rx="14" fill="#E8F8F1"/>
+<circle cx="1054" cy="632.5" r="3.2" fill="#20A67A"/>
+<text x="1064" y="634.4" fill="#20A67A" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Активна</text>
+<text x="1165" y="632.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="312" y1="685" x2="1372" y2="685" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1167" y="625" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1180" y="645.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1258" y="625" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1273" y="645.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<rect x="323" y="728" width="1041" height="76" rx="10" fill="#EAF1FF"/>
+<text x="346" y="758.3" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Правило за резервация</text>
+<text x="346" y="780.35" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="13" text-anchor="start">За едно игрище не са позволени две активни резервации с припокриващи се часове.</text>
+</svg>

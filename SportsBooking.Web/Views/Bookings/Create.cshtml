@@ -1,0 +1,12 @@
+@model Booking
+@{
+    ViewData["Title"] = "Добавяне — Резервации";
+}
+<div class="page-heading"><h1>@ViewData["Title"]</h1><a asp-action="Index">← Назад към списъка</a></div>
+<section class="panel narrow">
+    <form asp-action="Create" asp-route-id="@(Model.BookingID)" method="post" data-booking-form="true">
+        <div asp-validation-summary="ModelOnly" class="validation"></div>
+        @await Html.PartialAsync("_Form", Model)
+        <div class="buttons"><button class="btn primary" type="submit">Запази</button><a class="btn" asp-action="Index">Отказ</a></div>
+    </form>
+</section>

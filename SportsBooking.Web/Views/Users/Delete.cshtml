@@ -1,0 +1,10 @@
+@model User
+@{ ViewData["Title"] = "Изтриване"; }
+<div class="page-heading"><h1>Изтриване на запис №@Model.UserID</h1><a asp-action="Index">← Назад</a></div>
+<section class="panel narrow">
+    <p>Сигурни ли сте, че искате да изтриете този запис? Операцията не може да бъде отменена.</p>
+    @if (ViewBag.DeleteError != null) { <div class="alert error">@ViewBag.DeleteError</div> }
+    <form asp-action="Delete" asp-route-id="@Model.UserID" method="post">
+        <div class="buttons"><button type="submit" class="btn danger">Да, изтрий</button><a asp-action="Index" class="btn">Отказ</a></div>
+    </form>
+</section>

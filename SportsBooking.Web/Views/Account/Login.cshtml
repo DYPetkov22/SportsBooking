@@ -1,0 +1,14 @@
+@model SportsBooking.Web.ViewModels.LoginViewModel
+@{ ViewData["Title"] = "Вход"; }
+<div class="page-heading"><h1>Вход в SportsBooking</h1></div>
+<section class="panel narrow auth-panel">
+    <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post">
+        <div asp-validation-summary="All" class="validation"></div>
+        <div class="field"><label asp-for="Email">Имейл</label><input asp-for="Email" autocomplete="username" class="input"/><span asp-validation-for="Email" class="validation"></span></div>
+        <div class="field"><label asp-for="Password">Парола</label><input asp-for="Password" autocomplete="current-password" class="input"/><span asp-validation-for="Password" class="validation"></span></div>
+        <div class="field"><label><input asp-for="RememberMe"/> Запомни ме</label></div>
+        <button type="submit" class="btn primary">Вход</button>
+    </form>
+    <p class="muted">Ако имейлът ви е в старите примерни записи, не може да се присвои без проверка от администратор.</p>
+    <p>Нямате профил? <a asp-action="Register">Регистрация</a></p>
+</section>

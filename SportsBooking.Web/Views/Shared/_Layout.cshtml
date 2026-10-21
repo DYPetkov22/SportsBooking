@@ -1,0 +1,43 @@
+@using SportsBooking.Web.Security
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] — SportsBooking</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar"><div class="wrap nav">
+        <a class="brand" asp-controller="Home" asp-action="Index">⚽ SportsBooking</a>
+        <nav aria-label="Основно меню">
+            <a asp-controller="Fields" asp-action="Index">Игрища</a>
+            <a asp-controller="Sports" asp-action="Index">Спортове</a>
+            <a asp-controller="SportsCenters" asp-action="Index">Центрове</a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Bookings" asp-action="Index">Резервации</a>
+                @if (User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager))
+                { <a asp-controller="Payments" asp-action="Index">Плащания</a> }
+                @if (User.IsInRole(AppRoles.Admin))
+                { <a asp-controller="Users" asp-action="Index">Потребители</a> <a asp-controller="Roles" asp-action="Index">Роли</a> }
+                <span class="nav-user">@User.Identity.Name</span>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="nav-form"><button type="submit" class="nav-logout">Изход</button></form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login">Вход</a>
+                <a asp-controller="Account" asp-action="Register">Регистрация</a>
+            }
+        </nav>
+    </div></header>
+    <main class="wrap main">
+        @if (TempData["Success"] is string message) { <div class="alert success" role="status">@message</div> }
+        @if (TempData["Error"] is string error) { <div class="alert error">@error</div> }
+        @RenderBody()
+    </main>
+    <footer class="wrap footer">ASP.NET Core MVC • .NET 9 • SQL Server • Identity</footer>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

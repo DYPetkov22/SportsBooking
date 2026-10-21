@@ -1,0 +1,22 @@
+@using SportsBooking.Web.Security
+@{ ViewData["Title"] = "Начало"; }
+<section class="hero">
+    <p class="eyebrow">Университетски проект • ASP.NET Core MVC • .NET 9</p>
+    <h1>Резервация на спортни игрища</h1>
+    <p>Изберете игрище и резервирайте удобен час. Акаунтите са защитени с ASP.NET Core Identity.</p>
+    @if (User.Identity?.IsAuthenticated == true)
+    { <a class="btn primary" asp-controller="Bookings" asp-action="Create">+ Нова резервация</a> }
+    else
+    { <a class="btn primary" asp-controller="Account" asp-action="Register">Създай профил</a> }
+</section>
+<section class="stats">
+    <a asp-controller="Fields" asp-action="Index"><strong>@ViewBag.FieldsCount</strong><span>Игрища</span></a>
+    <a asp-controller="Sports" asp-action="Index"><strong>@ViewBag.SportsCount</strong><span>Видове спорт</span></a>
+    <a asp-controller="SportsCenters" asp-action="Index"><strong>@ViewBag.CentersCount</strong><span>Спортни центрове</span></a>
+</section>
+<section class="panel"><h2>Права за достъп</h2>
+    <p><strong>User:</strong> разглежда игрищата и управлява само собствените си резервации.</p>
+    <p><strong>Manager:</strong> управлява спортове, центрове, игрища, всички резервации и плащания.</p>
+    <p><strong>Admin:</strong> има достъп до всички CRUD екрани, включително потребителски профили.</p>
+    <p class="muted">Това е учебно приложение. Плащанията се регистрират ръчно, без реална онлайн транзакция.</p>
+</section>

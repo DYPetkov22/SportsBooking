@@ -1,0 +1,36 @@
+@model IEnumerable<Booking>
+@{ ViewData["Title"] = "Резервации"; }
+<div class="page-heading"><h1>Резервации</h1><a asp-action="Create" class="btn primary">+ Добави</a></div>
+<div class="table-scroll">
+    <table>
+        <thead><tr><th>Потребител</th>
+<th>Игрище</th>
+<th>Дата</th>
+<th>От</th>
+<th>До</th>
+<th>Статус</th><th>Действия</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.User?.FullName)</td>
+<td>@(item.Field?.FieldName)</td>
+<td>@item.BookingDate.ToString("dd.MM.yyyy")</td>
+<td>@item.StartTime.ToString("HH:mm")</td>
+<td>@item.EndTime.ToString("HH:mm")</td>
+<td>@item.Status</td>
+                <td class="actions">
+                    <a asp-action="Details" asp-route-id="@item.BookingID">Преглед</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Edit" asp-route-id="@item.BookingID">Редакция</a> }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a class="danger-text" asp-action="Delete" asp-route-id="@item.BookingID">Изтриване</a> }
+                    @if (item.Status == "Активна" && item.BookingDate >= DateOnly.FromDateTime(DateTime.Today))
+                    {
+                        <form asp-action="Cancel" asp-route-id="@item.BookingID" method="post" class="inline-form"><button type="submit" class="link-button">Откажи</button></form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+@if (!Model.Any()) { <p class="empty">Все още няма записи.</p> }

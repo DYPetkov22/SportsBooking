@@ -1,0 +1,6 @@
+@model SportsCenter
+@{ ViewData["Title"] = "Преглед на запис"; }
+<div class="page-heading"><h1>Преглед на запис №@Model.CenterID</h1><a asp-action="Index">← Назад</a></div>
+<section class="panel narrow"><dl class="details"><dt>Център</dt><dd>@Model.CenterName</dd>
+<dt>Град</dt><dd>@Model.City</dd></dl>
+<div class="buttons">@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a class="btn primary" asp-action="Edit" asp-route-id="@Model.CenterID">Редактирай</a> }<a class="btn" asp-action="Index">Назад</a></div></section>

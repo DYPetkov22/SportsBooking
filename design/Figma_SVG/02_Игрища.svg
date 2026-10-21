@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1440" height="900" viewBox="0 0 1440 900">
+<title>02_Игрища</title>
+<rect x="0" y="0" width="1440" height="900" rx="0" fill="#F6F8FC"/>
+<rect x="0" y="0" width="246" height="900" rx="0" fill="#17243D"/>
+<rect x="21" y="30" width="39" height="39" rx="11" fill="#346FE5"/>
+<rect x="31" y="40" width="19" height="19" rx="2" fill="#00000000" stroke="#FFFFFF" stroke-width="1.5"/>
+<line x1="40.5" y1="41" x2="40.5" y2="58" stroke="#FFFFFF" stroke-width="1.3"/>
+<circle cx="40.5" cy="49.5" r="3" fill="#00000000" stroke="#FFFFFF" stroke-width="1.2"/>
+<text x="72" y="49.05" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="19" text-anchor="start">SportsBooking</text>
+<text x="73" y="63.55" fill="#A3B5CE" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="9" text-anchor="start">ADMIN PANEL</text>
+<text x="27" y="123.45" fill="#8F9FBA" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="11" text-anchor="start">НАВИГАЦИЯ</text>
+<circle cx="38" cy="171" r="8" fill="#45617F"/>
+<text x="57" y="174.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Начало</text>
+<rect x="14" y="202" width="218" height="45" rx="10" fill="#243958"/>
+<rect x="14" y="210" width="3" height="29" rx="1" fill="#346FE5"/>
+<circle cx="38" cy="224" r="8" fill="#346FE5"/>
+<text x="57" y="227.3" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Игрища</text>
+<circle cx="38" cy="277" r="8" fill="#45617F"/>
+<text x="57" y="280.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Резервации</text>
+<circle cx="38" cy="330" r="8" fill="#45617F"/>
+<text x="57" y="333.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Потребители</text>
+<circle cx="38" cy="383" r="8" fill="#45617F"/>
+<text x="57" y="386.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортове</text>
+<circle cx="38" cy="436" r="8" fill="#45617F"/>
+<text x="57" y="439.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортни центрове</text>
+<circle cx="38" cy="489" r="8" fill="#45617F"/>
+<text x="57" y="492.3" fill="#C0CCE0" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Плащания</text>
+<rect x="18" y="752" width="210" height="115" rx="12" fill="#20324F"/>
+<text x="33" y="781.45" fill="#A3B5CE" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="11" text-anchor="start">УЧЕБЕН ПРОЕКТ</text>
+<text x="33" y="804.35" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="13" text-anchor="start">ASP.NET Core MVC</text>
+<text x="33" y="824.4" fill="#B6C5DE" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="12" text-anchor="start">SQL Server · 6 таблици</text>
+<text x="33" y="851.45" fill="#A3B5CE" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="11" text-anchor="start">v1.0 • Демо данни</text>
+<rect x="246" y="0" width="1194" height="87" rx="0" fill="#FFFFFF"/>
+<line x1="246" y1="86" x2="1440" y2="86" stroke="#E3E9F2" stroke-width="1"/>
+<text x="293" y="33.45" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="11" text-anchor="start">УПРАВЛЕНИЕ  /  ИГРИЩА</text>
+<circle cx="1352" cy="43" r="21" fill="#EAF1FF"/>
+<text x="1353.0" y="46.25" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="15" text-anchor="middle">SB</text>
+<text x="1203" y="47.35" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="13" text-anchor="start">Демо режим</text>
+<text x="294" y="139.55" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="29" text-anchor="start">Игрища</text>
+<text x="295" y="164.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Преглед и управление на всички спортни игрища.</text>
+<rect x="1187" y="112" width="207" height="43" rx="11" fill="#346FE5"/>
+<text x="1290.5" y="136.8" fill="#FFFFFF" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="middle">+ Добави игрище</text>
+<rect x="294" y="203" width="1100" height="642" rx="15" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="322" y="252.0" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="20" text-anchor="start">Списък с игрища</text>
+<text x="322" y="278.35" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="13" text-anchor="start">Общо 4 игрища в 2 спортни центъра</text>
+<rect x="321" y="308" width="582" height="46" rx="10" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="337" y="335.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">⌕   Търси по име на игрище...</text>
+<rect x="924" y="308" width="212" height="46" rx="10" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="941" y="335.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Всички спортове   ▾</text>
+<rect x="1147" y="308" width="218" height="46" rx="10" fill="#FFFFFF" stroke="#E3E9F2" stroke-width="1"/>
+<text x="1164" y="335.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Всички центрове   ▾</text>
+<rect x="313" y="391" width="1060" height="44" rx="8" fill="#F1F4F9"/>
+<text x="329" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Име</text>
+<text x="604" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Спорт</text>
+<text x="790" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Спортен център</text>
+<text x="1011" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Цена/час</text>
+<text x="1154" y="415.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Действия</text>
+<text x="329" y="464.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Футболно игрище 1</text>
+<text x="604" y="465.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Футбол</text>
+<text x="790" y="465.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортен център Изток</text>
+<text x="1011" y="465.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">40,00 €</text>
+<text x="1154" y="465.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="313" y1="518" x2="1373" y2="518" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1158" y="457" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1172" y="478.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1249" y="457" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1263" y="478.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<text x="329" y="547.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Тенис корт 1</text>
+<text x="604" y="548.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Тенис</text>
+<text x="790" y="548.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортен център Изток</text>
+<text x="1011" y="548.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">20,00 €</text>
+<text x="1154" y="548.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="313" y1="601" x2="1373" y2="601" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1158" y="540" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1172" y="561.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1249" y="540" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1263" y="561.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<text x="329" y="630.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Баскетболно игрище 1</text>
+<text x="604" y="631.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Баскетбол</text>
+<text x="790" y="631.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортен център Запад</text>
+<text x="1011" y="631.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">25,00 €</text>
+<text x="1154" y="631.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="313" y1="684" x2="1373" y2="684" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1158" y="623" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1172" y="644.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1249" y="623" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1263" y="644.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<text x="329" y="713.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="14" text-anchor="start">Футболно игрище 2</text>
+<text x="604" y="714.3" fill="#19263C" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Футбол</text>
+<text x="790" y="714.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">Спортен център Запад</text>
+<text x="1011" y="714.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start">35,00 €</text>
+<text x="1154" y="714.3" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="14" text-anchor="start"></text>
+<line x1="313" y1="767" x2="1373" y2="767" stroke="#E3E9F2" stroke-width="1"/>
+<rect x="1158" y="706" width="85" height="36" rx="8" fill="#EAF1FF"/>
+<text x="1172" y="727.4" fill="#346FE5" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Редакция</text>
+<rect x="1249" y="706" width="94" height="36" rx="8" fill="#FFF0F0"/>
+<text x="1263" y="727.4" fill="#E44A5B" font-family="Inter, Noto Sans, sans-serif" font-weight="700" font-size="12" text-anchor="start">Изтриване</text>
+<text x="322" y="813.4" fill="#7C8AA1" font-family="Inter, Noto Sans, sans-serif" font-weight="400" font-size="12" text-anchor="start">Показани 4 от 4 записа</text>
+</svg>

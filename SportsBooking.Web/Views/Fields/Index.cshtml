@@ -1,0 +1,28 @@
+@model IEnumerable<Field>
+@{ ViewData["Title"] = "Игрища"; }
+<div class="page-heading"><h1>Игрища</h1>@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Create" class="btn primary">+ Добави</a> }</div>
+<div class="table-scroll">
+    <table>
+        <thead><tr><th>Игрище</th>
+<th>Център</th>
+<th>Спорт</th>
+<th>Цена/час (EUR)</th><th>Действия</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FieldName</td>
+<td>@(item.Center?.CenterName)</td>
+<td>@(item.Sport?.SportName)</td>
+<td>@item.PricePerHour.ToString("F2")</td>
+                <td class="actions">
+                    <a asp-action="Details" asp-route-id="@item.FieldID">Преглед</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Edit" asp-route-id="@item.FieldID">Редакция</a> }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a class="danger-text" asp-action="Delete" asp-route-id="@item.FieldID">Изтриване</a> }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+@if (!Model.Any()) { <p class="empty">Все още няма записи.</p> }

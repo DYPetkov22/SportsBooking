@@ -1,0 +1,7 @@
+@model Payment
+@{ ViewData["Title"] = "Преглед на запис"; }
+<div class="page-heading"><h1>Преглед на запис №@Model.PaymentID</h1><a asp-action="Index">← Назад</a></div>
+<section class="panel narrow"><dl class="details"><dt>№ резервация</dt><dd>@Model.BookingID</dd>
+<dt>Сума (EUR)</dt><dd>@Model.Amount.ToString("F2")</dd>
+<dt>Начин на плащане</dt><dd>@Model.PaymentMethod</dd></dl>
+<div class="buttons"><a class="btn primary" asp-action="Edit" asp-route-id="@Model.PaymentID">Редактирай</a><a class="btn" asp-action="Index">Назад</a></div></section>

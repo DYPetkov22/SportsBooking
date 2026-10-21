@@ -1,0 +1,21 @@
+@model Payment
+<div class="field">
+    <label asp-for="BookingID"></label>
+    <select asp-for="BookingID" asp-items="ViewBag.Bookings" class="input">
+        <option value="0">-- Изберете --</option>
+    </select>
+    <span asp-validation-for="BookingID" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="Amount"></label>
+    <input asp-for="Amount" type="number" min="0.01" max="999999.99" step="0.01" class="input" />
+    <span asp-validation-for="Amount" class="validation"></span>
+</div>
+<div class="field">
+    <label asp-for="PaymentMethod"></label>
+    <select asp-for="PaymentMethod" class="input">
+        <option value="Карта">Карта</option>
+        <option value="В брой">В брой</option>
+    </select>
+    <span asp-validation-for="PaymentMethod" class="validation"></span>
+</div>

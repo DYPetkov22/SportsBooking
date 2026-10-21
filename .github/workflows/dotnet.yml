@@ -1,0 +1,21 @@
+name: .NET 9 Build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Restore NuGet packages
+        run: dotnet restore SportsBooking.sln
+      - name: Build
+        run: dotnet build SportsBooking.sln --configuration Release --no-restore
