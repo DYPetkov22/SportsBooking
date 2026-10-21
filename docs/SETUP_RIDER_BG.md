@@ -24,12 +24,13 @@ dotnet run --project .\SportsBooking.Web --launch-profile SportsBooking.Web
 От корена на проекта (папката със `SportsBooking.sln`) изпълни:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\Check-Environment.ps1
+dotnet --list-sdks
+sqllocaldb info
 ```
 
 Ако `sqllocaldb` не е разпозната команда, LocalDB вероятно не е инсталиран или не е в PATH. При инсталация чрез SQL Server Express има отделен пакет `SqlLocalDB.msi`; официална инструкция: https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb.
 
-Ако съществува `SqlLocalDB.exe`, скриптът ще покаже точното му местоположение. След инсталиране може да стартираш инстанцията чрез пълния път към .exe:
+След инсталиране може да стартираш инстанцията чрез пълния път към `SqlLocalDB.exe`:
 
 ```powershell
 & "C:\Program Files\Microsoft SQL Server\160\Tools\Binn\SqlLocalDB.exe" start MSSQLLocalDB
