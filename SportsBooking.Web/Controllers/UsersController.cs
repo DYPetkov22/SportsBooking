@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportsBooking.Web.Data;
 using SportsBooking.Web.Models;
+using SportsBooking.Web.Services;
 
 namespace SportsBooking.Web.Controllers;
 
@@ -13,7 +14,8 @@ public class UsersController : Controller
 {
     private readonly SportsBookingContext _db;
     private readonly IdentityContext _identity;
-    public UsersController(SportsBookingContext db, IdentityContext identity) { _db = db; _identity = identity; }
+    private readonly LocalFileStorage _storage;
+    public UsersController(SportsBookingContext db, IdentityContext identity, LocalFileStorage storage) { _db = db; _identity = identity; _storage = storage; }
 
     public async Task<IActionResult> Index()
     {
@@ -119,6 +121,7 @@ public class UsersController : Controller
         try
         {
             await _db.SaveChangesAsync();
+            await _storage.DeleteProfileImageAsync(id);
             TempData["Success"] = "Записът е изтрит.";
             return RedirectToAction(nameof(Index));
         }

@@ -94,6 +94,19 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    [Authorize, HttpGet]
+    public async Task<IActionResult> Profile()
+    {
+        var account = await _users.GetUserAsync(User);
+        if (account?.BookingUserId is not int profileId)
+        {
+            TempData["Error"] = "Този акаунт няма свързан потребителски профил.";
+            return RedirectToAction("Index", "Home");
+        }
+        var profile = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.UserID == profileId);
+        return profile == null ? NotFound() : View(profile);
+    }
+
     [Authorize, HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {

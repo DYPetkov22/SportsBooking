@@ -47,3 +47,17 @@ tr:last-child td { border-bottom:0; }.actions { white-space:nowrap; }.actions a 
 .role-form { display:flex; align-items:center; gap:8px; } .role-form .input { width:160px; }
 .stats { grid-template-columns:repeat(3,minmax(0,1fr)); }
 @media(max-width:720px){ .role-form {flex-wrap:wrap;} .stats { grid-template-columns: 1fr; } }
+
+/* Secure upload & gallery screens */
+.profile-picture { object-fit: cover; border-radius: 50%; background: #e7e9ee; display: block; }
+.top-gap { margin-top: 1rem; }
+.media-panel { margin-top: 1.5rem; }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; }
+.gallery-tile { min-width: 0; }
+.gallery-tile img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: #e7e9ee; }
+.gallery-tile form { margin-top: .5rem; }
+.media-list { list-style: none; padding-left: 0; }
+.media-list li { padding: .6rem 0; border-bottom: 1px solid #ddd; display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; }
+.upload-form { margin-top: 1.25rem; }
+.inline-form { display: inline-block; }
+.btn.small { font-size: .85rem; padding: .35rem .65rem; }

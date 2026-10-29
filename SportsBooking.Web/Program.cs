@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using SportsBooking.Web.Data;
 using SportsBooking.Web.Models;
 using SportsBooking.Web.Security;
+using SportsBooking.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews(o =>
     o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+builder.Services.AddSingleton<LocalFileStorage>();
 
 var databaseProvider = builder.Configuration["Database:Provider"] ?? "SqlServer";
 var useSqlite = databaseProvider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase);

@@ -8,3 +8,44 @@
 <dt>До</dt><dd>@Model.EndTime.ToString("HH:mm")</dd>
 <dt>Статус</dt><dd>@Model.Status</dd></dl>
 <div class="buttons">@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a class="btn primary" asp-action="Edit" asp-route-id="@Model.BookingID">Редактирай</a> }<a class="btn" asp-action="Index">Назад</a></div></section>
+
+@{
+    var documents = ViewBag.Documents as IReadOnlyList<SportsBooking.Web.Services.StoredUpload>
+        ?? Array.Empty<SportsBooking.Web.Services.StoredUpload>();
+}
+<section class="panel media-panel">
+    <h2>Документи към резервацията</h2>
+    <p class="muted">PDF или DOCX, до 10 MB за файл. Достъпни са само за вас и оторизираните служители. Максимум 10 документа.</p>
+    @if (TempData["FileError"] is string error)
+    {
+        <div class="alert error" role="alert">@error</div>
+    }
+    @if (documents.Count > 0)
+    {
+        <ul class="media-list">
+        @foreach (var doc in documents)
+        {
+            <li>
+                <a asp-controller="Files" asp-action="DownloadBookingDocument" asp-route-bookingId="@Model.BookingID" asp-route-uploadId="@doc.Id">@doc.OriginalFileName</a>
+                <span class="muted">(@(Math.Ceiling(doc.Length / 1024.0)) KB)</span>
+                <form asp-controller="Files" asp-action="DeleteBookingDocument" asp-route-bookingId="@Model.BookingID" asp-route-uploadId="@doc.Id" method="post" class="inline-form">
+                    <button type="submit" class="btn small" onclick="return confirm('Изтриване на документа?')">Изтрий</button>
+                </form>
+            </li>
+        }
+        </ul>
+    }
+    else
+    {
+        <p class="empty">Няма качени документи.</p>
+    }
+    @if (documents.Count < SportsBooking.Web.Services.LocalFileStorage.MaxDocumentsPerBooking)
+    {
+        <form asp-controller="Files" asp-action="UploadBookingDocument" asp-route-bookingId="@Model.BookingID" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="field"><label for="booking-document">Добави документ</label>
+                <input id="booking-document" name="file" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
+            </div>
+            <button class="btn primary" type="submit">Качи документа</button>
+        </form>
+    }
+</section>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using SportsBooking.Web.Security;
+using SportsBooking.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,8 @@ namespace SportsBooking.Web.Controllers;
 public class FieldsController : Controller
 {
     private readonly SportsBookingContext _db;
-    public FieldsController(SportsBookingContext db) => _db = db;
+    private readonly LocalFileStorage _storage;
+    public FieldsController(SportsBookingContext db, LocalFileStorage storage) { _db = db; _storage = storage; }
 
     [AllowAnonymous]
     public async Task<IActionResult> Index()
@@ -25,7 +27,9 @@ public class FieldsController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var item = await _db.Fields.Include(x => x.Center).Include(x => x.Sport).AsNoTracking().FirstOrDefaultAsync(x => x.FieldID == id);
-        return item == null ? NotFound() : View(item);
+        if (item == null) return NotFound();
+        ViewBag.Images = await _storage.ListFieldImagesAsync(id, HttpContext.RequestAborted);
+        return View(item);
     }
 
     [HttpGet]
@@ -124,6 +128,7 @@ public class FieldsController : Controller
         try
         {
             await _db.SaveChangesAsync();
+            await _storage.DeleteAllFieldImagesAsync(id, HttpContext.RequestAborted);
             TempData["Success"] = "Записът е изтрит.";
             return RedirectToAction(nameof(Index));
         }

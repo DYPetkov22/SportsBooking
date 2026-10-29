@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SportsBooking.Web.Data;
 using SportsBooking.Web.Models;
 using SportsBooking.Web.Security;
+using SportsBooking.Web.Services;
 
 namespace SportsBooking.Web.Controllers;
 
@@ -16,8 +17,9 @@ public class BookingsController : Controller
 {
     private readonly SportsBookingContext _db;
     private readonly UserManager<ApplicationUser> _users;
-    public BookingsController(SportsBookingContext db, UserManager<ApplicationUser> users)
-    { _db = db; _users = users; }
+    private readonly LocalFileStorage _storage;
+    public BookingsController(SportsBookingContext db, UserManager<ApplicationUser> users, LocalFileStorage storage)
+    { _db = db; _users = users; _storage = storage; }
 
     private bool IsStaff => User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager);
     private async Task<int?> OwnProfileId()
@@ -44,6 +46,7 @@ public class BookingsController : Controller
             .Include(x => x.Payment).AsNoTracking().FirstOrDefaultAsync(x => x.BookingID == id);
         if (item == null) return NotFound();
         if (!IsStaff && item.UserID != await OwnProfileId()) return Forbid();
+        ViewBag.Documents = await _storage.ListBookingDocumentsAsync(id, HttpContext.RequestAborted);
         return View(item);
     }
 
@@ -146,7 +149,7 @@ public class BookingsController : Controller
         var item = await _db.Bookings.FindAsync(id);
         if (item == null) return NotFound();
         _db.Bookings.Remove(item);
-        try { await _db.SaveChangesAsync(); TempData["Success"] = "Резервацията е изтрита."; return RedirectToAction(nameof(Index)); }
+        try { await _db.SaveChangesAsync(); await _storage.DeleteAllBookingDocumentsAsync(id, HttpContext.RequestAborted); TempData["Success"] = "Резервацията е изтрита."; return RedirectToAction(nameof(Index)); }
         catch (DbUpdateException)
         {
             ViewBag.DeleteError = "Първо изтрийте свързаното плащане.";

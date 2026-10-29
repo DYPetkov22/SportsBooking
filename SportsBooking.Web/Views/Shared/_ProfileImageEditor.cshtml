@@ -1,0 +1,18 @@
+@model User
+<hr />
+<h2>Профилна снимка</h2>
+<img class="profile-picture" src="@Url.Action("ProfileImage", "Files", new { profileId = Model.UserID, v = DateTimeOffset.UtcNow.ToUnixTimeSeconds() })" alt="Профилна снимка (ако е добавена)" width="128" height="128" />
+<p class="muted">JPEG или PNG, максимум 5 MB. Снимката автоматично се оптимизира до 512 px.</p>
+@if (TempData["FileError"] is string error)
+{
+    <div class="alert error" role="alert">@error</div>
+}
+<form asp-controller="Files" asp-action="UploadProfile" asp-route-profileId="@Model.UserID" method="post" enctype="multipart/form-data">
+    <div class="field"><label for="profile-image-file">Изберете снимка</label>
+        <input id="profile-image-file" name="file" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" required />
+    </div>
+    <button class="btn primary" type="submit">Качи / замени снимката</button>
+</form>
+<form asp-controller="Files" asp-action="DeleteProfile" asp-route-profileId="@Model.UserID" method="post" class="top-gap">
+    <button class="btn" type="submit" onclick="return confirm('Да премахна ли профилната снимка?')">Премахни снимката</button>
+</form>

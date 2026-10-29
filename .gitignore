@@ -1,46 +1,20 @@
-# .NET build output
+# Build output / IDE files
 **/bin/
 **/obj/
-TestResults/
-**/TestResults/
-*.pdb
-
-# IDE files
 .idea/
 .vs/
-.vscode/
 *.user
 *.suo
-*.userosscache
-*.sln.docstates
-
-# Local secrets & overrides
-.env
-.env.*
-!.env.example
-**/secrets.json
+# User data and locally uploaded files must never be committed
+**/App_Data/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+# Secret overrides (environment variables recommended)
 **/appsettings.Local.json
-**/appsettings.Development.local.json
-**/appsettings.Production.json
-**/appsettings.Staging.json
-**/launchSettings.local.json
+**/secrets.json
 *.pfx
 *.p12
-*.key
-*.pem
-
-# Databases and machine-specific files
-*.mdf
-*.ldf
-*.bak
-*.db
-*.sqlite
-*.sqlite3
-*.db-shm
-*.db-wal
-
-# OS/editor outputs
-.DS_Store
-Thumbs.db
-*.swp
+# Temp files
 *.tmp
+.DS_Store
