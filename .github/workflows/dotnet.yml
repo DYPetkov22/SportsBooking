@@ -19,3 +19,5 @@ jobs:
         run: dotnet restore SportsBooking.sln
       - name: Build
         run: dotnet build SportsBooking.sln --configuration Release --no-restore
+      - name: Static requirements audit (Python 3)
+        run: python3 scripts/smoke_audit.py

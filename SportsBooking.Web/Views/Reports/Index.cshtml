@@ -1,0 +1,83 @@
+@model SportsBooking.Web.ViewModels.ReportsDashboardViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Справки и отчети";
+    var culture = CultureInfo.GetCultureInfo("bg-BG");
+}
+<section class="dashboard-intro report-heading">
+    <div><p class="eyebrow dark">АДМИНИСТРАТИВЕН ПАНЕЛ</p><h1>Справки и отчети</h1>
+        <p class="muted">Анализ на резервациите, приходите и най-предпочитаните спортове.</p></div>
+    <div class="report-export-actions">
+        <a class="btn" asp-action="ExportPdf" asp-route-from="@(Model.From.ToString("yyyy-MM-dd"))" asp-route-to="@(Model.To.ToString("yyyy-MM-dd"))">↓ PDF справка</a>
+        <a class="btn primary" asp-action="ExportExcel" asp-route-from="@(Model.From.ToString("yyyy-MM-dd"))" asp-route-to="@(Model.To.ToString("yyyy-MM-dd"))">↓ Excel справка</a>
+    </div>
+</section>
+<form method="get" asp-controller="Reports" asp-action="Index" class="filter-panel report-filter">
+    <div class="report-filter-grid">
+        <div class="field"><label for="from">От дата</label><input class="input" id="from" type="date" name="from" value="@(Model.From.ToString("yyyy-MM-dd"))" required /></div>
+        <div class="field"><label for="to">До дата</label><input class="input" id="to" type="date" name="to" value="@(Model.To.ToString("yyyy-MM-dd"))" required /></div>
+        <button class="btn primary" type="submit">Приложи филтър</button>
+        <a class="btn" asp-action="Index">Последните 12 месеца</a>
+    </div>
+    <p class="report-hint muted">Обхват до 24 календарни месеца. Резервации: по дата на игра; плащания: по UTC дата на плащане.</p>
+</form>
+<div class="stats report-stats">
+    <div class="stat-card"><span class="stat-icon">◷</span><span>Всички резервации</span><strong>@Model.TotalBookings</strong></div>
+    <div class="stat-card"><span class="stat-icon">✓</span><span>Активни</span><strong>@Model.ActiveBookings</strong></div>
+    <div class="stat-card"><span class="stat-icon">€</span><span>Отчетени плащания</span><strong>@Model.TotalRevenue.ToString("N2", culture) €</strong><small class="muted">@Model.PaymentsCount плащания</small></div>
+    <div class="stat-card"><span class="stat-icon">◎</span><span>Потребители / игрища</span><strong>@Model.TotalUsers / @Model.TotalFields</strong><small class="muted">Общ брой към момента</small></div>
+</div>
+<div class="report-panels">
+    <section class="panel report-graph-panel">
+        <div class="report-section-title"><div><h2>Резервации по месеци</h2><p class="muted">Резервации по дата на игра през избрания период</p></div><span class="stat-pill">@Model.TotalBookings общо</span></div>
+        <div class="chart-horizontal-scroll"><div class="month-chart" role="img" aria-label="Брой резервации по месеци">
+        @foreach (var month in Model.Months)
+        {
+            var height = month.Bookings == 0 ? 0 : Math.Max(5m, 100m * month.Bookings / Model.MaxMonthlyBookings);
+            <div class="month-col" title="@month.Label: @month.Bookings резервации">
+                <span class="chart-value">@month.Bookings</span><div class="bar-track"><div class="bar-fill" style="height:@(height.ToString("0.##", CultureInfo.InvariantCulture))%"></div></div>
+                <small>@month.Label</small>
+            </div>
+        }
+        </div></div>
+    </section>
+    <section class="panel report-graph-panel">
+        <div class="report-section-title"><div><h2>Приходи по месеци</h2><p class="muted">По дата на плащането (UTC)</p></div><span class="stat-pill">EUR</span></div>
+        <div class="chart-horizontal-scroll"><div class="month-chart" role="img" aria-label="Сума на плащанията по месеци в евро">
+        @foreach (var month in Model.Months)
+        {
+            var height = month.Revenue == 0 ? 0 : Math.Max(5m, 100m * month.Revenue / Model.MaxMonthlyRevenue);
+            <div class="month-col" title="@month.Label: @month.Revenue.ToString("N2", culture) EUR">
+                <span class="chart-value">@month.Revenue.ToString("0.#", culture)</span><div class="bar-track"><div class="bar-fill revenue-bar" style="height:@(height.ToString("0.##", CultureInfo.InvariantCulture))%"></div></div>
+                <small>@month.Label</small>
+            </div>
+        }
+        </div></div>
+    </section>
+</div>
+<div class="report-panels">
+    <section class="panel report-bottom-panel"><h2>Най-предпочитани спортове</h2><p class="muted">По брой активни резервации</p>
+        @if (Model.TopSports.Count == 0) { <p class="empty">Няма резервации за този период.</p> }
+        @foreach (var sport in Model.TopSports)
+        {
+            var width = 100m * sport.Bookings / Model.MaxSportBookings;
+            <div class="sport-row"><div class="sport-row-label"><strong>@sport.Sport</strong><span>@sport.Bookings рез.</span></div><div class="sport-track"><div class="sport-fill" style="width:@(width.ToString("0.##", CultureInfo.InvariantCulture))%"></div></div></div>
+        }
+    </section>
+    <section class="panel report-bottom-panel"><h2>Методи на плащане</h2><p class="muted">Суми и брой транзакции за периода</p>
+        <div class="report-methods">
+        @if (Model.PaymentMethods.Count == 0) { <p class="empty">Няма плащания за този период.</p> }
+        @foreach (var method in Model.PaymentMethods)
+        { <div class="report-method"><span>@method.Method <small>(@method.Count бр.)</small></span><strong>@method.Amount.ToString("N2", culture) €</strong></div> }
+        </div>
+        <div class="report-note"><strong>Отказани резервации:</strong> @Model.CancelledBookings. Текущият статус на резервацията не променя историческите плащания.</div>
+    </section>
+</div>
+<section class="panel">
+    <div class="report-section-title"><h2>Подробна месечна таблица</h2><p class="muted">Данните от тази таблица се включват в PDF и Excel.</p></div>
+    <div class="table-scroll"><table><thead><tr><th>Месец</th><th>Всички</th><th>Активни</th><th>Отказани</th><th>Приходи (EUR)</th></tr></thead><tbody>
+    @foreach (var month in Model.Months)
+    { <tr><td>@month.Label</td><td>@month.Bookings</td><td>@month.ActiveBookings</td><td>@month.CancelledBookings</td><td>@month.Revenue.ToString("N2", culture)</td></tr> }
+    </tbody></table></div>
+    <p class="muted report-hint">Забележка: за вече съществували плащания новото поле за дата се попълва с датата на SQL миграцията, понеже старият модел не е съхранявал време на плащане.</p>
+</section>

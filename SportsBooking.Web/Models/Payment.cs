@@ -21,6 +21,10 @@ public class Payment
     [Display(Name = "Начин на плащане")]
     public string PaymentMethod { get; set; } = "Карта";
 
+    // Filled by SQL Server when the payment is first inserted; preserved when edited.
+    [Display(Name = "Дата на плащане (UTC)")]
+    public DateTime PaidAtUtc { get; set; }
+
     [ValidateNever]
     public Booking? Booking { get; set; }
 }

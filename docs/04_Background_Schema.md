@@ -28,4 +28,7 @@ erDiagram
 Двете връзки са в `SportsBooking.Web/appsettings.json`. По подразбиране се използва `Server=(localdb)\MSSQLLocalDB`, което изисква SQL Server Express LocalDB на Windows; за SQL Server Express сменете и двете връзки.
 
 ## Изходен код
-`Data/SportsBookingContext.cs`, `Data/IdentityContext.cs`, `Models/`, `database/SportsBooking_Simple.sql`. Диаграмата е във `docs/ER_Diagram.png`.
+`Data/SportsBookingContext.cs`, `Data/IdentityContext.cs`, `Models/`, `database/01_SportsBooking_SQLServer.sql`. Диаграмата е във `docs/ER_Diagram.svg`.
+
+
+> **Задание 7 (ноември 2026):** таблицата `Payments` включва и `PaidAtUtc DATETIME2(0)` с UTC стойност по подразбиране. За съществуващи бази изпълнете `database/04_Upgrade_Reports.sql`. Демо Admin и Manager акаунтите са ASP.NET Core Identity записи в **отделната SQL Server база** `SportsBookingIdentityDB` и се създават автоматично от приложението при стартиране в Development, а не с SQL INSERT с plaintext пароли.

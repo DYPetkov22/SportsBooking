@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Илюстрация спортен стадион">
+<defs><linearGradient id="pitch" x2="0" y2="1"><stop stop-color="#51d6bb"/><stop offset="1" stop-color="#249eaa"/></linearGradient><filter id="sh"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#03132f" flood-opacity=".25"/></filter></defs>
+<circle cx="390" cy="68" r="42" fill="#4669b3" opacity=".25"/><circle cx="100" cy="229" r="69" fill="#5d7fe2" opacity=".24"/>
+<path d="M52 158 238 65 428 159 240 263Z" fill="#0a2554" filter="url(#sh)"/>
+<path d="m65 159 172-82 178 83-176 89Z" fill="url(#pitch)" stroke="#c5fff2" stroke-width="3"/>
+<path d="m239 78 1 172m-172-91 347 1m-173-36 58 36-59 36-58-36Z" stroke="#d6fff4" stroke-width="3" fill="none" opacity=".8"/>
+<path d="m99 143 35-16 0 63-35-15zm283 0-35-16v63l35-16z" stroke="#dcfff8" stroke-width="3" fill="none"/>
+<circle cx="239" cy="159" r="26" fill="#f5fbff" stroke="#17395d" stroke-width="3"/>
+<path d="m238 143 12 7-3 14h-18l-3-14zM227 164l-9 10m29-10 9 10m-18-31v-11" stroke="#17395d" stroke-width="3" stroke-linecap="round" fill="none"/>
+<circle cx="94" cy="69" r="6" fill="#8fd9ff"/><circle cx="414" cy="231" r="8" fill="#8fd9ff"/><path d="M88 259l19-16m-10 24 13-11M383 35l13-16" stroke="#83c6ff" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+</svg>

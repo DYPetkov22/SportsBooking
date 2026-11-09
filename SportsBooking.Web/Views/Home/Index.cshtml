@@ -1,22 +1,34 @@
 @using SportsBooking.Web.Security
-@{ ViewData["Title"] = "Начало"; }
-<section class="hero">
-    <p class="eyebrow">Университетски проект • ASP.NET Core MVC • .NET 9</p>
-    <h1>Резервация на спортни игрища</h1>
-    <p>Изберете игрище и резервирайте удобен час. Акаунтите са защитени с ASP.NET Core Identity.</p>
-    @if (User.Identity?.IsAuthenticated == true)
-    { <a class="btn primary" asp-controller="Bookings" asp-action="Create">+ Нова резервация</a> }
-    else
-    { <a class="btn primary" asp-controller="Account" asp-action="Register">Създай профил</a> }
+@using SportsBooking.Web.Models
+@{
+    ViewData["Title"] = "Начало";
+    var loggedIn = User.Identity?.IsAuthenticated == true;
+    var staff = User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager);
+    var recent = ViewBag.RecentBookings as List<Booking> ?? new List<Booking>();
+}
+<section class="dashboard-intro"><div><p class="eyebrow dark">СПОРТНИ РЕЗЕРВАЦИИ</p><h1>Начало</h1><p class="muted">Игрища, резервации и спортни центрове на едно място.</p></div>
+@if (loggedIn) { <a class="btn primary" asp-controller="Bookings" asp-action="Create">+ Нова резервация</a> }
+else { <a class="btn primary" asp-controller="Account" asp-action="Register">Създай профил</a> }
 </section>
-<section class="stats">
-    <a asp-controller="Fields" asp-action="Index"><strong>@ViewBag.FieldsCount</strong><span>Игрища</span></a>
-    <a asp-controller="Sports" asp-action="Index"><strong>@ViewBag.SportsCount</strong><span>Видове спорт</span></a>
-    <a asp-controller="SportsCenters" asp-action="Index"><strong>@ViewBag.CentersCount</strong><span>Спортни центрове</span></a>
-</section>
-<section class="panel"><h2>Права за достъп</h2>
-    <p><strong>User:</strong> разглежда игрищата и управлява само собствените си резервации.</p>
-    <p><strong>Manager:</strong> управлява спортове, центрове, игрища, всички резервации и плащания.</p>
-    <p><strong>Admin:</strong> има достъп до всички CRUD екрани, включително потребителски профили.</p>
-    <p class="muted">Това е учебно приложение. Плащанията се регистрират ръчно, без реална онлайн транзакция.</p>
-</section>
+<div class="welcome-banner"><div><p class="eyebrow">SPORTSBOOKING</p><h2>Твоето игрище. Твоят час.</h2><p>Намери подходящото игрище, избери дата и резервирай лесно. Управлявай всичко от един профил.</p><a class="btn light" asp-controller="Fields" asp-action="Index">Разгледай игрищата</a></div><img src="~/img/sports-hero.svg" alt="Илюстрация на спортно игрище" width="340" height="240" /></div>
+<div class="stats">
+<a asp-controller="Fields" asp-action="Index"><span class="stat-icon">▦</span><span>Активни игрища</span><strong>@ViewBag.FieldsCount</strong></a>
+<a asp-controller="Sports" asp-action="Index"><span class="stat-icon">◈</span><span>Видове спорт</span><strong>@ViewBag.SportsCount</strong></a>
+<a asp-controller="SportsCenters" asp-action="Index"><span class="stat-icon">⌂</span><span>Спортни центрове</span><strong>@ViewBag.CentersCount</strong></a>
+@if (loggedIn) { <a asp-controller="Bookings" asp-action="Index"><span class="stat-icon">◷</span><span>Активни резервации днес</span><strong>@ViewBag.BookingsToday</strong></a> }
+</div>
+@if (loggedIn && staff)
+{
+    <section class="report-cta"><div><p class="eyebrow">АНАЛИЗИ И ОТЧЕТИ</p><h2>Прегледай резултатите на SportsBooking</h2><p>Месечни резервации, приходи, предпочитани спортове и експорти в PDF или Excel.</p></div><a class="btn light" asp-controller="Reports" asp-action="Index">Отвори справките →</a></section>
+}
+@if (loggedIn)
+{
+    <section class="panel"><div class="page-heading"><div><h2>Последни резервации</h2><p class="muted">@(User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager) ? "Последна активност в системата" : "Само вашите резервации")</p></div><a asp-controller="Bookings" asp-action="Index">Виж всички →</a></div>
+    <div class="table-scroll"><table><thead><tr><th>Потребител</th><th>Игрище</th><th>Дата</th><th>Статус</th></tr></thead><tbody>
+    @foreach (var booking in recent)
+    { <tr><td>@(booking.User?.FullName)</td><td>@(booking.Field?.FieldName)</td><td>@booking.BookingDate.ToString("dd.MM.yyyy")</td><td><span class="status @(booking.Status == "Активна" ? "active" : "cancelled")">@booking.Status</span></td></tr> }
+    </tbody></table></div>
+    @if (!recent.Any()) { <p class="empty">Все още нямате резервации.</p> }
+    </section>
+}
+<section class="tip-strip"><span class="tip-icon">✓</span><div><strong>Защитен достъп</strong><p>Регистрация и вход чрез ASP.NET Core Identity; само упълномощени служители управляват спортните ресурси.</p></div></section>

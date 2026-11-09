@@ -1,10 +1,17 @@
-# SQL Server база
+# Microsoft SQL Server — database/
 
-Локалното стартиране по подразбиране използва SQLite и не изисква тези SQL скриптове. За конфигурация със SQL Server виж [README](../README.md#optional-sql-server); задай provider и двата connection string-а чрез environment variables.
+`01_SportsBooking_SQLServer.sql` — **основният SQL инсталационен скрипт**: създава `SportsBookingDB_Simple` с шест домейн таблици, PK/FK/CHECK/UNIQUE, индекси и примерни данни. Повторното изпълнение не изтрива данни.
 
-- `SportsBooking_Simple.sql` — създава `SportsBookingDB_Simple`, 6 таблици с ограничения и примерни данни. **Изпълнява се веднъж** върху нов SQL Server.
-- `02_Optional_Booking_Index.sql` — по желание добавя индекс за проверка на резервирани часове (само след създаването на основните таблици; изпълнява се веднъж).
+`02_Optional_Booking_Index.sql` — исторически допълнителен индекс (не е нужен, защото вече е включен в основния скрипт).
 
-**Не качвай** `.mdf`, `.ldf`, `.bak` или реални бази в GitHub. За локално възстановяване изпълни основния SQL скрипт, конфигурирай връзките в `appsettings.json` и стартирай MVC проекта. Identity базата се създава от приложението при първо стартиране.
+`03_Verify_SQLServer.sql` — проверки за структурите и началните данни.
 
-За повече подробности виж `docs/04_Backend_Schema.md` и `docs/06_Seed_Data.md`.
+`04_Upgrade_Reports.sql` — добавя UTC дата на плащането (`PaidAtUtc`) и индекс в **съществуваща база**. Направи backup и изпълни преди стартиране на обновеното приложение. Не се изисква за чиста инсталация с `01`.
+
+`05_Verify_DemoAccounts.sql` — проверява наличните Identity Admin и Manager потребители и роли след стартиране в Development; **не показва пароли**.
+
+`SportsBooking_Simple.sql` — остарялото име, оставено като указател към новия скрипт; **не го изпълнявай вместо 01**.
+
+ASP.NET Core Identity таблиците са в отделна SQL Server база `SportsBookingIdentityDB`, която се създава автоматично само при първоначално стартиране на нова празна база.
+
+Подробни стъпки: [docs/SQL_SERVER_SETUP_BG.md](../docs/SQL_SERVER_SETUP_BG.md).

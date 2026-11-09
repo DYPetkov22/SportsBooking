@@ -1,36 +1,33 @@
-@model IEnumerable<Booking>
+@model SportsBooking.Web.ViewModels.BookingSearchViewModel
 @{ ViewData["Title"] = "Резервации"; }
-<div class="page-heading"><h1>Резервации</h1><a asp-action="Create" class="btn primary">+ Добави</a></div>
-<div class="table-scroll">
-    <table>
-        <thead><tr><th>Потребител</th>
-<th>Игрище</th>
-<th>Дата</th>
-<th>От</th>
-<th>До</th>
-<th>Статус</th><th>Действия</th></tr></thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@(item.User?.FullName)</td>
-<td>@(item.Field?.FieldName)</td>
-<td>@item.BookingDate.ToString("dd.MM.yyyy")</td>
-<td>@item.StartTime.ToString("HH:mm")</td>
-<td>@item.EndTime.ToString("HH:mm")</td>
-<td>@item.Status</td>
-                <td class="actions">
-                    <a asp-action="Details" asp-route-id="@item.BookingID">Преглед</a>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Edit" asp-route-id="@item.BookingID">Редакция</a> }
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a class="danger-text" asp-action="Delete" asp-route-id="@item.BookingID">Изтриване</a> }
-                    @if (item.Status == "Активна" && item.BookingDate >= DateOnly.FromDateTime(DateTime.Today))
-                    {
-                        <form asp-action="Cancel" asp-route-id="@item.BookingID" method="post" class="inline-form"><button type="submit" class="link-button">Откажи</button></form>
-                    }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-</div>
-@if (!Model.Any()) { <p class="empty">Все още няма записи.</p> }
+<div class="page-heading"><div><p class="eyebrow dark">КАЛЕНДАР</p><h1>Резервации</h1><p class="muted">Следете предстоящите часове и състоянието на резервациите.</p></div><a asp-action="Create" class="btn primary">+ Нова резервация</a></div>
+<form asp-action="Index" method="get" class="filter-panel" aria-label="Филтриране на резервации">
+    <div class="filter-grid">
+        <div class="field"><label asp-for="Search">Търсене</label><input asp-for="Search" placeholder="Игрище или клиент" maxlength="100" class="input" /></div>
+        <div class="field"><label asp-for="FieldId">Игрище</label><select asp-for="FieldId" asp-items="Model.Fields" class="input"><option value="">Всички игрища</option></select></div>
+        <div class="field"><label asp-for="Status">Статус</label><select asp-for="Status" class="input"><option value="">Всички</option><option value="Активна">Активна</option><option value="Отказана">Отказана</option></select></div>
+        <div class="field"><label asp-for="From">От дата</label><input asp-for="From" type="date" class="input" /></div>
+        <div class="field"><label asp-for="To">До дата</label><input asp-for="To" type="date" class="input" /></div>
+        <div class="field"><label asp-for="Sort">Сортиране</label><select asp-for="Sort" class="input"><option value="date_desc">Дата: нови първо</option><option value="date_asc">Дата: стари първо</option><option value="field">По игрище</option><option value="status">По статус</option></select></div>
+    </div>
+    <div class="filter-actions"><button class="btn primary" type="submit">Приложи</button><a asp-action="Index" class="btn">Изчисти</a><span class="muted result-count">Намерени: @Model.TotalCount</span></div>
+</form>
+<div class="table-scroll"><table><thead><tr><th>Потребител</th><th>Игрище</th><th>Дата</th><th>От–до</th><th>Статус</th><th>Действия</th></tr></thead><tbody>
+@foreach (var item in Model.Items)
+{
+<tr><td>@(item.User?.FullName)</td><td><strong>@(item.Field?.FieldName)</strong></td><td>@item.BookingDate.ToString("dd.MM.yyyy")</td><td>@item.StartTime.ToString("HH:mm") – @item.EndTime.ToString("HH:mm")</td>
+<td><span class="status @(item.Status == "Активна" ? "active" : "cancelled")">@item.Status</span></td><td class="actions"><a asp-action="Details" asp-route-id="@item.BookingID">Преглед</a>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Edit" asp-route-id="@item.BookingID">Редакция</a><a class="danger-text" asp-action="Delete" asp-route-id="@item.BookingID">Изтриване</a> }
+@if (item.Status == "Активна" && item.BookingDate >= DateOnly.FromDateTime(DateTime.Today))
+{ <form asp-action="Cancel" asp-route-id="@item.BookingID" method="post" class="inline-form"><button type="submit" class="link-button" onclick="return confirm('Да се откаже ли резервацията?')">Откажи</button></form> }
+</td></tr>
+}
+</tbody></table></div>
+@if (Model.Items.Count == 0) { <p class="empty">Няма резервации по зададените критерии.</p> }
+@if (Model.TotalPages > 1)
+{
+<nav class="pagination" aria-label="Страници с резервации">
+@for (var p = Math.Max(1, Model.Page - 2); p <= Math.Min(Model.TotalPages, Model.Page + 2); p++)
+{ <a class="page-link @(p == Model.Page ? "active" : "")" aria-current="@(p == Model.Page ? "page" : null)" asp-action="Index" asp-route-page="@p" asp-route-search="@Model.Search" asp-route-fieldId="@Model.FieldId" asp-route-status="@Model.Status" asp-route-from="@Model.From" asp-route-to="@Model.To" asp-route-sort="@Model.Sort">@p</a> }
+</nav>
+}

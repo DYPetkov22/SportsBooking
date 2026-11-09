@@ -7,24 +7,23 @@ using SportsBooking.Web.Data;
 using SportsBooking.Web.Models;
 using SportsBooking.Web.Security;
 using SportsBooking.Web.Services;
+using SportsBooking.Web.Reporting;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews(o =>
     o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 builder.Services.AddSingleton<LocalFileStorage>();
+builder.Services.AddScoped<ReportsService>();
+// This university demo qualifies for the Community license. Check your license before commercial/public deployment.
+QuestPDF.Settings.License = LicenseType.Community;
 
-var databaseProvider = builder.Configuration["Database:Provider"] ?? "SqlServer";
-var useSqlite = databaseProvider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase);
-if (!useSqlite && !databaseProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
-    throw new InvalidOperationException("Database:Provider must be Sqlite or SqlServer.");
-if (useSqlite && !builder.Environment.IsDevelopment())
-    throw new InvalidOperationException("SQLite automatic setup is only available in Development. Configure SQL Server for production.");
-
+// SQL Server is the only provider. Development and Production use the same schema.
 builder.Services.AddDbContext<SportsBookingContext>(options =>
-    DatabaseSetup.Configure(options, builder.Configuration, builder.Environment, "SportsBooking", useSqlite));
+    DatabaseSetup.Configure(options, builder.Configuration, "SportsBooking"));
 builder.Services.AddDbContext<IdentityContext>(options =>
-    DatabaseSetup.Configure(options, builder.Configuration, builder.Environment, "Identity", useSqlite));
+    DatabaseSetup.Configure(options, builder.Configuration, "Identity"));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -64,6 +63,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
     app.UseHttpsRedirection();
 }
+app.Use(async (context, next) =>
+{
+    context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    context.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+    context.Response.Headers["X-Frame-Options"] = "DENY";
+    await next();
+});
 app.UseStaticFiles();
 var culture = new CultureInfo("en-US");
 app.UseRequestLocalization(new RequestLocalizationOptions
@@ -76,14 +82,19 @@ app.UseRouting();
 app.UseAuthentication(); // ТРЯБВА да е преди UseAuthorization.
 app.UseAuthorization();
 
-// Local SQLite databases initialize automatically. SQL Server business data uses the original SQL script.
+// Business schema is created with database/01_SportsBooking_SQLServer.sql.
+// Identity uses a separate, newly created SQL Server database (not SQLite).
+// EnsureCreated does not upgrade an existing schema: see docs/SQL_SERVER_SETUP_BG.md.
 using (var scope = app.Services.CreateScope())
 {
-    if (useSqlite)
-        await DatabaseSetup.InitializeDevelopmentAsync(scope.ServiceProvider.GetRequiredService<SportsBookingContext>());
+    var businessDb = scope.ServiceProvider.GetRequiredService<SportsBookingContext>();
+    if (!await businessDb.Database.CanConnectAsync())
+        throw new InvalidOperationException("Business SQL Server database is unavailable. Run database/01_SportsBooking_SQLServer.sql first.");
+
     await scope.ServiceProvider.GetRequiredService<IdentityContext>().Database.EnsureCreatedAsync();
 }
-await IdentitySeeder.InitializeAsync(app.Services, app.Configuration);
+await IdentitySeeder.InitializeAsync(app.Services, app.Configuration,
+    app.Environment.IsDevelopment() && app.Configuration.GetValue<bool>("DemoAccounts:Enabled"));
 
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 app.Run();

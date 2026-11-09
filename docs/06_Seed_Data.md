@@ -12,7 +12,7 @@
 6. `Payments` (2 записа с FK към резервация).
 
 ## Изпълнение
-SQL скриптът `database/SportsBooking_Simple.sql` създава базата и демо данните. Изпълнява се **само веднъж** в нов SQL Server. Резервациите използват относителни дати спрямо текущия ден, за да не остаряват автоматично след една седмица.
+SQL скриптът `database/01_SportsBooking_SQLServer.sql` създава базата и демо данните. Изпълнява се **само веднъж** в нов SQL Server. Резервациите използват относителни дати спрямо текущия ден, за да не остаряват автоматично след една седмица.
 
 Identity базата и ролите Admin/Manager/User се създават при стартиране на .NET приложението; admin акаунтът се създава само когато са зададени environment variables `SPORTSBOOKING_ADMIN_EMAIL` и `SPORTSBOOKING_ADMIN_PASSWORD`.
 
@@ -21,3 +21,6 @@ Identity базата и ролите Admin/Manager/User се създават �
 
 ## Проверки
 `SELECT COUNT(*)` за шестте таблици; `JOIN` от Bookings към Users/Fields; отрицателни сценарии за FK, UNIQUE, CHECK и конфликтен час.
+
+
+> **Задание 7 (ноември 2026):** таблицата `Payments` включва и `PaidAtUtc DATETIME2(0)` с UTC стойност по подразбиране. За съществуващи бази изпълнете `database/04_Upgrade_Reports.sql`. Демо Admin и Manager акаунтите са ASP.NET Core Identity записи в **отделната SQL Server база** `SportsBookingIdentityDB` и се създават автоматично от приложението при стартиране в Development, а не с SQL INSERT с plaintext пароли.

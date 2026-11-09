@@ -20,3 +20,30 @@ document.addEventListener('DOMContentLoaded', function () {
     ['input', 'change'].forEach(eventName => form.addEventListener(eventName, validate));
     form.addEventListener('submit', validate);
 });
+
+// Safe local demo: the server only renders these buttons when Development demos are enabled.
+document.querySelectorAll('.demo-fill').forEach(function (button) {
+    button.addEventListener('click', function () {
+        const email = document.querySelector('input[name="Email"]');
+        const password = document.querySelector('input[name="Password"]');
+        if (email && password) {
+            email.value = button.dataset.demoEmail || '';
+            password.value = button.dataset.demoPassword || '';
+            email.dispatchEvent(new Event('input', { bubbles: true }));
+            password.dispatchEvent(new Event('input', { bubbles: true }));
+            password.focus();
+        }
+    });
+});
+
+// Figma-style active item on the sidebar, including controller subroutes.
+(function () {
+    const current = window.location.pathname.toLowerCase();
+    document.querySelectorAll('.side-links a').forEach(function (link) {
+        const href = new URL(link.href).pathname.toLowerCase();
+        if ((href === '/' && current === '/') || (href !== '/' && (current === href || current.startsWith(href + '/')))) {
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
+        }
+    });
+})();

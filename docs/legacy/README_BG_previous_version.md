@@ -1,3 +1,5 @@
+> ИСТОРИЧЕСКА ВЕРСИЯ. Актуалните инструкции са в ../SQL_SERVER_SETUP_BG.md и ../../README.md. Някои стари пътища/настройки не са валидни.
+
 # SportsBooking – .NET 9 MVC + ASP.NET Core Identity + Roles
 
 Това е **надграденият** университетски проект за резервация на спортни игрища. Кодът използва ASP.NET Core MVC, Entity Framework Core 9, SQL Server и ASP.NET Core Identity (регистрация, вход, изход, роли).

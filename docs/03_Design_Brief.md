@@ -13,14 +13,16 @@
 
 ## Стил
 - Low fidelity: сиви форми, текст и placeholders; доказва информационната архитектура.
-- High fidelity: тъмносиньо странично меню, син акцент, светъл фон, четливи таблици и полета.
+- High fidelity: тъмносиньо странично меню, син акцент, светъл фон, четливи таблици и полета. **Този стил е приложен в `_Layout.cshtml` и `site.css`.**
 - Ясна типография, достатъчно отстояния, отчетливи бутони и отделени съобщения за грешки.
 
 ## Роли и навигация
 Скривай несъответстващи действия в интерфейса; но сигурността **не разчита на скриване**, а на server-side `[Authorize]` в контролерите.
 
 ## Figma
-Редактируемите екрани са на https://www.figma.com/design/tulP3DvT0Ryn677GLYzXaO — отделни Low и High Fidelity страници. Виж също `design/README.md` и `design/Figma_SVG/`.
+Редактируемите екрани са на https://www.figma.com/design/tulP3DvT0Ryn677GLYzXaO — отделни Low и High Fidelity страници. Виж също `wwwroot/img/brand-mark.svg` и `wwwroot/img/sports-hero.svg`.
 
 ## Бележка за реализацията
 Figma е дизайн прототип. Реалната структура и CSS са в `Views/` и `wwwroot/css/site.css` и не се синхронизират автоматично.
+
+Забележка: каченият ZIP **не съдържаше SVG експорти от Figma**. За приложението са създадени оригинални `brand-mark.svg` и `sports-hero.svg`, а компонентите в UI са реализирани с Razor/HTML/CSS.

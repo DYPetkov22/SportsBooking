@@ -1,4 +1,5 @@
 @model SportsBooking.Web.ViewModels.LoginViewModel
+@using SportsBooking.Web.Security
 @{ ViewData["Title"] = "Вход"; }
 <div class="page-heading"><h1>Вход в SportsBooking</h1></div>
 <section class="panel narrow auth-panel">
@@ -9,6 +10,24 @@
         <div class="field"><label><input asp-for="RememberMe"/> Запомни ме</label></div>
         <button type="submit" class="btn primary">Вход</button>
     </form>
-    <p class="muted">Ако имейлът ви е в старите примерни записи, не може да се присвои без проверка от администратор.</p>
+    <p class="muted auth-note">Примерните записи в базата нямат пароли. За вход използвайте регистрация или демо профилите по-долу.</p>
     <p>Нямате профил? <a asp-action="Register">Регистрация</a></p>
+    @if (ViewBag.ShowDemoAccounts == true)
+    {
+        <div class="demo-accounts" aria-label="Демо акаунти за учебна среда">
+            <div class="demo-heading"><span class="demo-badge">DEVELOPMENT ONLY</span><h2>Бърз вход за демонстрация</h2><p class="muted">Двата акаунта се създават автоматично в SQL Server при първо стартиране. Изберете „Попълни“, след което натиснете „Вход“.</p></div>
+            <div class="demo-grid">
+                <div class="demo-card"><strong>Администратор</strong><span class="demo-role">Пълен достъп</span>
+                    <span class="demo-info"><b>Имейл:</b> <code>@DemoAccounts.AdminEmail</code></span>
+                    <span class="demo-info"><b>Парола:</b> <code>@DemoAccounts.AdminPassword</code></span>
+                    <button type="button" class="btn small demo-fill" data-demo-email="@DemoAccounts.AdminEmail" data-demo-password="@DemoAccounts.AdminPassword">Попълни Admin</button>
+                </div>
+                <div class="demo-card"><strong>Мениджър</strong><span class="demo-role">Ресурси и справки</span>
+                    <span class="demo-info"><b>Имейл:</b> <code>@DemoAccounts.ManagerEmail</code></span>
+                    <span class="demo-info"><b>Парола:</b> <code>@DemoAccounts.ManagerPassword</code></span>
+                    <button type="button" class="btn small demo-fill" data-demo-email="@DemoAccounts.ManagerEmail" data-demo-password="@DemoAccounts.ManagerPassword">Попълни Manager</button>
+                </div>
+            </div>
+        </div>
+    }
 </section>

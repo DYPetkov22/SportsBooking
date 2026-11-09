@@ -4,40 +4,61 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101d38" />
+    <script src="~/js/theme.js" asp-append-version="true"></script>
     <title>@ViewData["Title"] — SportsBooking</title>
+    <link rel="icon" type="image/svg+xml" href="~/img/brand-mark.svg" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="topbar"><div class="wrap nav">
-        <a class="brand" asp-controller="Home" asp-action="Index">⚽ SportsBooking</a>
-        <nav aria-label="Основно меню">
-            <a asp-controller="Fields" asp-action="Index">Игрища</a>
-            <a asp-controller="Sports" asp-action="Index">Спортове</a>
-            <a asp-controller="SportsCenters" asp-action="Index">Центрове</a>
-            @if (User.Identity?.IsAuthenticated == true)
-            {
-                <a asp-controller="Bookings" asp-action="Index">Резервации</a>
-                <a asp-controller="Account" asp-action="Profile">Моят профил</a>
-                @if (User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager))
-                { <a asp-controller="Payments" asp-action="Index">Плащания</a> }
-                @if (User.IsInRole(AppRoles.Admin))
-                { <a asp-controller="Users" asp-action="Index">Потребители</a> <a asp-controller="Roles" asp-action="Index">Роли</a> }
-                <span class="nav-user">@User.Identity.Name</span>
-                <form asp-controller="Account" asp-action="Logout" method="post" class="nav-form"><button type="submit" class="nav-logout">Изход</button></form>
-            }
-            else
-            {
-                <a asp-controller="Account" asp-action="Login">Вход</a>
-                <a asp-controller="Account" asp-action="Register">Регистрация</a>
-            }
-        </nav>
-    </div></header>
-    <main class="wrap main">
-        @if (TempData["Success"] is string message) { <div class="alert success" role="status">@message</div> }
-        @if (TempData["Error"] is string error) { <div class="alert error">@error</div> }
-        @RenderBody()
-    </main>
-    <footer class="wrap footer">ASP.NET Core MVC • .NET 9 • SQL Server • Identity</footer>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Главна навигация">
+            <a class="brand" asp-controller="Home" asp-action="Index"><img src="~/img/brand-mark.svg" width="36" height="36" alt="" /><span>SportsBooking</span></a>
+            <p class="nav-caption">МЕНЮ</p>
+            <nav class="side-links" aria-label="Основно меню">
+                <a asp-controller="Home" asp-action="Index"><span class="menu-icon">⌂</span>Начало</a>
+                <a asp-controller="Fields" asp-action="Index"><span class="menu-icon">▦</span>Игрища</a>
+                <a asp-controller="SportsCenters" asp-action="Index"><span class="menu-icon">▤</span>Спортни центрове</a>
+                <a asp-controller="Sports" asp-action="Index"><span class="menu-icon">◈</span>Спортове</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-controller="Bookings" asp-action="Index"><span class="menu-icon">◷</span>Резервации</a>
+                    <a asp-controller="Account" asp-action="Profile"><span class="menu-icon">◎</span>Моят профил</a>
+                    @if ((User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager)))
+                    {
+                        <a asp-controller="Payments" asp-action="Index"><span class="menu-icon">€</span>Плащания</a>
+                        <a asp-controller="Reports" asp-action="Index"><span class="menu-icon">▥</span>Справки и отчети</a>
+                    }
+                    @if (User.IsInRole(AppRoles.Admin))
+                    { <a asp-controller="Users" asp-action="Index"><span class="menu-icon">♙</span>Потребители</a><a asp-controller="Roles" asp-action="Index"><span class="menu-icon">⚿</span>Роли</a> }
+                }
+            </nav>
+            <div class="sidebar-bottom">
+                <button type="button" class="theme-toggle logout-button" aria-pressed="false" aria-label="Тъмен режим">
+                    <span aria-hidden="true" data-theme-icon>☾</span> <span data-theme-label>Тъмен режим</span>
+                </button>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="signed-in-label">Влезли сте като</span>
+                    <span class="signed-in-email" title="@User.Identity.Name">@User.Identity.Name</span>
+                    <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="logout-button">Изход <span aria-hidden="true">↗</span></button></form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="sidebar-auth">Вход</a>
+                    <a asp-controller="Account" asp-action="Register" class="sidebar-auth muted-auth">Регистрация</a>
+                }
+            </div>
+        </aside>
+        <div class="content-shell"><header class="mobile-header"><a class="brand" asp-controller="Home" asp-action="Index"><img src="~/img/brand-mark.svg" width="30" height="30" alt="" /> SportsBooking</a></header>
+            <main class="content" id="main-content">
+                @if (TempData["Success"] is string message) { <div class="alert success" role="status">@message</div> }
+                @if (TempData["Error"] is string error) { <div class="alert error" role="alert">@error</div> }
+                @RenderBody()
+            </main>
+            <footer class="footer">SportsBooking · ASP.NET Core MVC · .NET 9 · Microsoft SQL Server</footer>
+        </div>
+    </div>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

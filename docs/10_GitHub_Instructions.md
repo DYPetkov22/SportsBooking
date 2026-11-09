@@ -19,7 +19,7 @@ git push -u origin main
 Заменете `YOUR_USERNAME` и името на репозитория. Ако той вече съдържа README/commits, не използвайте сляпо тези команди — първо сравнете състоянието.
 
 ## Какво се качва
-`SportsBooking.sln`, `SportsBooking.Web/`, `database/`, `docs/`, `design/`, `.gitignore`, `.github/workflows/dotnet.yml`.
+`SportsBooking.sln`, `SportsBooking.Web/`, `database/`, `docs/`, `SportsBooking.Web/wwwroot/img/`, `.gitignore`, `.github/workflows/dotnet.yml`.
 
 ## Какво НЕ се качва
 `bin/`, `obj/`, `.idea/`, `.env`, пароли, реални connection credentials, локални `.mdf`/`.ldf` бази, сертификати. DB схемата се възстановява от SQL файла, не от database binaries.

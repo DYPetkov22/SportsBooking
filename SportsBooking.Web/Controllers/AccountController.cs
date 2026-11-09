@@ -14,13 +14,22 @@ public class AccountController : Controller
     private readonly UserManager<ApplicationUser> _users;
     private readonly SignInManager<ApplicationUser> _signIn;
     private readonly SportsBookingContext _db;
+    private readonly IWebHostEnvironment _environment;
+    private readonly IConfiguration _configuration;
     public AccountController(UserManager<ApplicationUser> users, SignInManager<ApplicationUser> signIn,
-        SportsBookingContext db) { _users = users; _signIn = signIn; _db = db; }
+        SportsBookingContext db, IWebHostEnvironment environment, IConfiguration configuration)
+    { _users = users; _signIn = signIn; _db = db; _environment = environment; _configuration = configuration; }
+
+    private void ConfigureDemoCredentials()
+    {
+        ViewBag.ShowDemoAccounts = _environment.IsDevelopment() && _configuration.GetValue<bool>("DemoAccounts:Enabled");
+    }
 
     [AllowAnonymous, HttpGet]
     public IActionResult Login(string? returnUrl = null)
     {
         ViewBag.ReturnUrl = Url.IsLocalUrl(returnUrl) ? returnUrl : null;
+        ConfigureDemoCredentials();
         return View(new LoginViewModel());
     }
 
@@ -28,7 +37,18 @@ public class AccountController : Controller
     public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
         ViewBag.ReturnUrl = Url.IsLocalUrl(returnUrl) ? returnUrl : null;
+        ConfigureDemoCredentials();
         if (!ModelState.IsValid) return View(model);
+        // Prevent login by publicly documented demo credentials outside the local demo environment,
+        // including when an existing development database is accidentally reused.
+        var demoAllowed = _environment.IsDevelopment() && _configuration.GetValue<bool>("DemoAccounts:Enabled");
+        var isDemo = string.Equals(model.Email, DemoAccounts.AdminEmail, StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(model.Email, DemoAccounts.ManagerEmail, StringComparison.OrdinalIgnoreCase);
+        if (isDemo && !demoAllowed)
+        {
+            ModelState.AddModelError("", "Демонстрационните профили са изключени в тази среда.");
+            return View(model);
+        }
         var account = await _users.FindByEmailAsync(model.Email);
         if (account != null)
         {

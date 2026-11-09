@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportsBooking.Web.Data;
 using SportsBooking.Web.Models;
+using SportsBooking.Web.ViewModels;
 
 namespace SportsBooking.Web.Controllers;
 
@@ -17,10 +18,38 @@ public class FieldsController : Controller
     public FieldsController(SportsBookingContext db, LocalFileStorage storage) { _db = db; _storage = storage; }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] FieldSearchViewModel filters, CancellationToken ct)
     {
-        var rows = await _db.Fields.Include(x => x.Center).Include(x => x.Sport).AsNoTracking().OrderBy(x => x.FieldName).ToListAsync();
-        return View(rows);
+        filters.Page = Math.Clamp(filters.Page, 1, 10000);
+        filters.Search = filters.Search?.Trim();
+        if (filters.Search?.Length > 100) filters.Search = filters.Search[..100];
+        if (filters.MinPrice is < 0) filters.MinPrice = 0;
+        if (filters.MaxPrice is < 0) filters.MaxPrice = 0;
+        var query = _db.Fields.AsNoTracking().Include(x => x.Center).Include(x => x.Sport).AsQueryable();
+        if (!string.IsNullOrWhiteSpace(filters.Search))
+            query = query.Where(x => x.FieldName.Contains(filters.Search) ||
+                x.Center!.CenterName.Contains(filters.Search) || x.Sport!.SportName.Contains(filters.Search));
+        if (filters.SportId is > 0) query = query.Where(x => x.SportID == filters.SportId);
+        if (filters.CenterId is > 0) query = query.Where(x => x.CenterID == filters.CenterId);
+        if (filters.MinPrice.HasValue) query = query.Where(x => x.PricePerHour >= filters.MinPrice.Value);
+        if (filters.MaxPrice.HasValue) query = query.Where(x => x.PricePerHour <= filters.MaxPrice.Value);
+
+        filters.TotalCount = await query.CountAsync(ct);
+        query = filters.Sort switch
+        {
+            "name_desc" => query.OrderByDescending(x => x.FieldName).ThenBy(x => x.FieldID),
+            "price_asc" => query.OrderBy(x => x.PricePerHour).ThenBy(x => x.FieldID),
+            "price_desc" => query.OrderByDescending(x => x.PricePerHour).ThenBy(x => x.FieldID),
+            "sport" => query.OrderBy(x => x.Sport!.SportName).ThenBy(x => x.FieldName),
+            _ => query.OrderBy(x => x.FieldName).ThenBy(x => x.FieldID)
+        };
+        filters.Items = await query.Skip((filters.Page - 1) * filters.PageSize)
+            .Take(filters.PageSize).ToListAsync(ct);
+        filters.Sports = await _db.Sports.AsNoTracking().OrderBy(x => x.SportName)
+            .Select(x => new SelectListItem(x.SportName, x.SportID.ToString())).ToListAsync(ct);
+        filters.Centers = await _db.SportsCenters.AsNoTracking().OrderBy(x => x.CenterName)
+            .Select(x => new SelectListItem(x.CenterName, x.CenterID.ToString())).ToListAsync(ct);
+        return View(filters);
     }
 
     [AllowAnonymous]

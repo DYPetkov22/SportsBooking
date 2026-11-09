@@ -1,28 +1,33 @@
-@model IEnumerable<Field>
+@model SportsBooking.Web.ViewModels.FieldSearchViewModel
 @{ ViewData["Title"] = "Игрища"; }
-<div class="page-heading"><h1>Игрища</h1>@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Create" class="btn primary">+ Добави</a> }</div>
-<div class="table-scroll">
-    <table>
-        <thead><tr><th>Игрище</th>
-<th>Център</th>
-<th>Спорт</th>
-<th>Цена/час (EUR)</th><th>Действия</th></tr></thead>
-        <tbody>
-        @foreach (var item in Model)
+<div class="page-heading"><div><p class="eyebrow dark">КАТАЛОГ</p><h1>Спортни игрища</h1><p class="muted">Търсене, филтри и сравнение на цени.</p></div>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Create" class="btn primary">+ Добави игрище</a> }</div>
+<form method="get" asp-action="Index" class="filter-panel" aria-label="Филтриране на игрища">
+    <div class="filter-grid">
+        <div class="field"><label asp-for="Search">Търсене</label><input asp-for="Search" placeholder="Игрище, спорт или център" maxlength="100" class="input" /></div>
+        <div class="field"><label asp-for="SportId">Спорт</label><select asp-for="SportId" asp-items="Model.Sports" class="input"><option value="">Всички спортове</option></select></div>
+        <div class="field"><label asp-for="CenterId">Център</label><select asp-for="CenterId" asp-items="Model.Centers" class="input"><option value="">Всички центрове</option></select></div>
+        <div class="field"><label asp-for="MinPrice">Мин. цена (€)</label><input asp-for="MinPrice" type="number" min="0" step="0.01" class="input" /></div>
+        <div class="field"><label asp-for="MaxPrice">Макс. цена (€)</label><input asp-for="MaxPrice" type="number" min="0" step="0.01" class="input" /></div>
+        <div class="field"><label asp-for="Sort">Сортиране</label><select asp-for="Sort" class="input"><option value="name">Име: А–Я</option><option value="name_desc">Име: Я–А</option><option value="price_asc">Цена: възходяща</option><option value="price_desc">Цена: низходяща</option><option value="sport">По спорт</option></select></div>
+    </div>
+    <div class="filter-actions"><button class="btn primary" type="submit">Покажи резултати</button><a class="btn" asp-action="Index">Изчисти</a><span class="muted result-count">Намерени: @Model.TotalCount</span></div>
+</form>
+<div class="table-scroll"><table><thead><tr><th>Игрище</th><th>Спорт</th><th>Център</th><th>Цена / час</th><th>Действия</th></tr></thead><tbody>
+@foreach (var item in Model.Items)
+{
+    <tr><td><strong>@item.FieldName</strong></td><td>@(item.Sport?.SportName)</td><td>@(item.Center?.CenterName)</td><td><strong>@item.PricePerHour.ToString("F2") €</strong></td>
+    <td class="actions"><a asp-action="Details" asp-route-id="@item.FieldID">Преглед</a>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Edit" asp-route-id="@item.FieldID">Редакция</a><a class="danger-text" asp-action="Delete" asp-route-id="@item.FieldID">Изтриване</a> }</td></tr>
+}
+</tbody></table></div>
+@if (Model.Items.Count == 0) { <p class="empty">Няма игрища по зададените критерии.</p> }
+@if (Model.TotalPages > 1)
+{
+    <nav class="pagination" aria-label="Страници с игрища">
+        @for (var p = Math.Max(1, Model.Page - 2); p <= Math.Min(Model.TotalPages, Model.Page + 2); p++)
         {
-            <tr>
-                <td>@item.FieldName</td>
-<td>@(item.Center?.CenterName)</td>
-<td>@(item.Sport?.SportName)</td>
-<td>@item.PricePerHour.ToString("F2")</td>
-                <td class="actions">
-                    <a asp-action="Details" asp-route-id="@item.FieldID">Преглед</a>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-action="Edit" asp-route-id="@item.FieldID">Редакция</a> }
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a class="danger-text" asp-action="Delete" asp-route-id="@item.FieldID">Изтриване</a> }
-                </td>
-            </tr>
+            <a class="page-link @(p == Model.Page ? "active" : "")" aria-current="@(p == Model.Page ? "page" : null)" asp-action="Index" asp-route-page="@p" asp-route-search="@Model.Search" asp-route-sportId="@Model.SportId" asp-route-centerId="@Model.CenterId" asp-route-minPrice="@Model.MinPrice" asp-route-maxPrice="@Model.MaxPrice" asp-route-sort="@Model.Sort">@p</a>
         }
-        </tbody>
-    </table>
-</div>
-@if (!Model.Any()) { <p class="empty">Все още няма записи.</p> }
+    </nav>
+}

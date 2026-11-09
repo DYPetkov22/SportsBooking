@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using SportsBooking.Web.Data;
 using SportsBooking.Web.Models;
 using SportsBooking.Web.Security;
 using SportsBooking.Web.Services;
+using SportsBooking.Web.ViewModels;
 
 namespace SportsBooking.Web.Controllers;
 
@@ -28,16 +30,41 @@ public class BookingsController : Controller
         return user?.BookingUserId;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] BookingSearchViewModel filters, CancellationToken ct)
     {
-        var rows = _db.Bookings.Include(x => x.User).Include(x => x.Field).AsNoTracking().AsQueryable();
+        filters.Page = Math.Clamp(filters.Page, 1, 10000);
+        filters.Search = filters.Search?.Trim();
+        if (filters.Search?.Length > 100) filters.Search = filters.Search[..100];
+        IQueryable<Booking> query = _db.Bookings.AsNoTracking()
+            .Include(x => x.User).Include(x => x.Field);
         if (!IsStaff)
         {
             var profileId = await OwnProfileId();
             if (!profileId.HasValue) return Forbid();
-            rows = rows.Where(x => x.UserID == profileId.Value);
+            query = query.Where(x => x.UserID == profileId.Value);
         }
-        return View(await rows.OrderByDescending(x => x.BookingDate).ThenBy(x => x.StartTime).ToListAsync());
+        if (!string.IsNullOrWhiteSpace(filters.Search))
+            query = query.Where(x => x.Field!.FieldName.Contains(filters.Search) ||
+                x.User!.FullName.Contains(filters.Search));
+        if (filters.FieldId is > 0) query = query.Where(x => x.FieldID == filters.FieldId.Value);
+        if (filters.Status is "Активна" or "Отказана")
+            query = query.Where(x => x.Status == filters.Status);
+        if (filters.From.HasValue) query = query.Where(x => x.BookingDate >= filters.From.Value);
+        if (filters.To.HasValue) query = query.Where(x => x.BookingDate <= filters.To.Value);
+
+        filters.TotalCount = await query.CountAsync(ct);
+        query = filters.Sort switch
+        {
+            "date_asc" => query.OrderBy(x => x.BookingDate).ThenBy(x => x.StartTime).ThenBy(x => x.BookingID),
+            "field" => query.OrderBy(x => x.Field!.FieldName).ThenByDescending(x => x.BookingDate),
+            "status" => query.OrderBy(x => x.Status).ThenByDescending(x => x.BookingDate),
+            _ => query.OrderByDescending(x => x.BookingDate).ThenBy(x => x.StartTime).ThenBy(x => x.BookingID)
+        };
+        filters.Items = await query.Skip((filters.Page - 1) * filters.PageSize)
+            .Take(filters.PageSize).ToListAsync(ct);
+        filters.Fields = await _db.Fields.AsNoTracking().OrderBy(x => x.FieldName)
+            .Select(x => new SelectListItem(x.FieldName, x.FieldID.ToString())).ToListAsync(ct);
+        return View(filters);
     }
 
     public async Task<IActionResult> Details(int id)
@@ -86,6 +113,11 @@ public class BookingsController : Controller
             TempData["Success"] = "Резервацията е добавена.";
             return RedirectToAction(nameof(Index));
         }
+        catch (SqlException ex) when (ex.Number is 1205 or 1222)
+        {
+            ModelState.AddModelError("", "Друг потребител резервира в този момент. Опитайте отново.");
+            return await InvalidForm(item);
+        }
         catch (DbUpdateException)
         {
             ModelState.AddModelError("", "Резервацията не може да бъде запазена.");
@@ -127,6 +159,11 @@ public class BookingsController : Controller
             await transaction.CommitAsync();
             TempData["Success"] = "Резервацията е редактирана.";
             return RedirectToAction(nameof(Index));
+        }
+        catch (SqlException ex) when (ex.Number is 1205 or 1222)
+        {
+            ModelState.AddModelError("", "Има едновременна промяна. Опитайте отново.");
+            return await InvalidForm(item);
         }
         catch (DbUpdateException)
         {
