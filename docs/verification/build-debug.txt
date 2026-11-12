@@ -1,0 +1,17 @@
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : No Six Labors license found. This Debug build can continue, but Release builds require a valid license. [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : Set SixLaborsLicenseKey, set SixLaborsLicenseFile, or add 'sixlabors.lic' to your project. [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : If you use an assembly-scoped community key, ensure it covers this project's exact AssemblyName. [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : Please obtain a license from https://sixlabors.com/pricing/ [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+  SportsBooking.Web -> /workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/bin/Debug/net9.0/SportsBooking.Web.dll
+  SportsBooking.Tests -> /workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Tests/bin/Debug/net9.0/SportsBooking.Tests.dll
+
+Build succeeded.
+
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : No Six Labors license found. This Debug build can continue, but Release builds require a valid license. [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : Set SixLaborsLicenseKey, set SixLaborsLicenseFile, or add 'sixlabors.lic' to your project. [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : If you use an assembly-scoped community key, ensure it covers this project's exact AssemblyName. [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+/home/agent/.nuget/packages/sixlabors.imagesharp/4.1.3/build/SixLabors.ImageSharp.targets(35,5): warning : Please obtain a license from https://sixlabors.com/pricing/ [/workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Web/SportsBooking.Web.csproj]
+    1 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.21

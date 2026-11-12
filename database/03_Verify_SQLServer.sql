@@ -1,6 +1,6 @@
 USE [SportsBookingDB_Simple];
 GO
--- Expect six tables, six primary keys, four FKs, field/booking/payment constraints.
+-- Expect six tables, six primary keys, five FKs, field/booking/payment constraints.
 SELECT t.name AS TableName, (SELECT COUNT(*) FROM sys.columns c WHERE c.object_id=t.object_id) AS Columns
 FROM sys.tables t WHERE t.name IN (N'Users',N'Sports',N'SportsCenters',N'Fields',N'Bookings',N'Payments')
 ORDER BY t.name;

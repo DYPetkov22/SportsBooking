@@ -14,6 +14,17 @@ SQL Server трябва да е инсталиран **локално** или �
 
 ## 2. Създаване на база данни
 
+**Препоръчителен вариант след клониране от GitHub:** папката `database/` съдържа отделно решение `SportsBooking.Database.sln` с два SQL Server проекта — бизнес базата и Identity. Изпълни от основната папка:
+
+```powershell
+dotnet tool install --global Microsoft.SqlPackage
+powershell -ExecutionPolicy Bypass -File .\database\Deploy.ps1
+```
+
+Това компилира SQL проектите и създава/обновява и двете бази в LocalDB с примерни бизнес данни. Подробности и избор на друг SQL Server: [database/README.md](../database/README.md). Identity ролите и демо акаунтите се добавят при стартиране на приложението.
+
+**Алтернатива чрез самостоятелния SQL скрипт:**
+
 1. Отвори SSMS; `Server name: (localdb)\MSSQLLocalDB`, Authentication: Windows Authentication.
 2. Отвори `database/01_SportsBooking_SQLServer.sql` и натисни **Execute**. Файлът съдържа `GO` batch разделители (изисква SSMS/sqlcmd/Rider SQL console, а не EF `ExecuteSqlRaw`).
 3. В Object Explorer → Databases ще видиш `SportsBookingDB_Simple` с таблици `Users`, `Sports`, `SportsCenters`, `Fields`, `Bookings`, `Payments`.

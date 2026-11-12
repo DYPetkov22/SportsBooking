@@ -1,0 +1,8 @@
+@model int
+@{ ViewData["Title"] = $"{Model} — Възникна грешка"; }
+<div class="panel">
+    <h1>@Model — Възникна грешка</h1>
+    <p>Заявката не може да бъде изпълнена. Опитайте отново по-късно.</p>
+    <p>Номер за проследяване: <code>@Context.TraceIdentifier</code></p>
+    <a asp-controller="Home" asp-action="Index">Към началната страница</a>
+</div>

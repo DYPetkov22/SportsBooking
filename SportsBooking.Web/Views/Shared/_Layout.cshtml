@@ -1,63 +1,71 @@
 @using SportsBooking.Web.Security
+@{
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var staff = User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager);
+    var home = ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index";
+}
 <!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#101d38" />
+    <meta name="theme-color" content="#a53d27" />
     <script src="~/js/theme.js" asp-append-version="true"></script>
     <title>@ViewData["Title"] — SportsBooking</title>
     <link rel="icon" type="image/svg+xml" href="~/img/brand-mark.svg" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/design.css" asp-append-version="true" />
 </head>
-<body>
-    <div class="app-shell">
-        <aside class="sidebar" aria-label="Главна навигация">
-            <a class="brand" asp-controller="Home" asp-action="Index"><img src="~/img/brand-mark.svg" width="36" height="36" alt="" /><span>SportsBooking</span></a>
-            <p class="nav-caption">МЕНЮ</p>
-            <nav class="side-links" aria-label="Основно меню">
-                <a asp-controller="Home" asp-action="Index"><span class="menu-icon">⌂</span>Начало</a>
-                <a asp-controller="Fields" asp-action="Index"><span class="menu-icon">▦</span>Игрища</a>
-                <a asp-controller="SportsCenters" asp-action="Index"><span class="menu-icon">▤</span>Спортни центрове</a>
-                <a asp-controller="Sports" asp-action="Index"><span class="menu-icon">◈</span>Спортове</a>
-                @if (User.Identity?.IsAuthenticated == true)
+<body class="@(home ? "page-home" : "page-interior")">
+    <a class="skip-link" href="#main-content">Към съдържанието</a>
+    <div class="site-shell">
+        <header class="site-header">
+            <a class="brand" asp-controller="Home" asp-action="Index"><img src="~/img/brand-mark.svg" width="38" height="38" alt="" /><span>Sports<span class="brand-soft">Booking</span></span></a>
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-navigation" aria-label="Отвори менюто"><span></span><span></span><span></span></button>
+            <nav id="site-navigation" class="site-nav" aria-label="Основно меню">
+                <a asp-controller="Home" asp-action="Index">Начало</a>
+                <a asp-controller="Fields" asp-action="Index">Игрища</a>
+                <a asp-controller="SportsCenters" asp-action="Index">Центрове</a>
+                <a asp-controller="Sports" asp-action="Index">Спортове</a>
+                @if (signedIn)
                 {
-                    <a asp-controller="Bookings" asp-action="Index"><span class="menu-icon">◷</span>Резервации</a>
-                    <a asp-controller="Account" asp-action="Profile"><span class="menu-icon">◎</span>Моят профил</a>
-                    @if ((User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager)))
-                    {
-                        <a asp-controller="Payments" asp-action="Index"><span class="menu-icon">€</span>Плащания</a>
-                        <a asp-controller="Reports" asp-action="Index"><span class="menu-icon">▥</span>Справки и отчети</a>
-                    }
-                    @if (User.IsInRole(AppRoles.Admin))
-                    { <a asp-controller="Users" asp-action="Index"><span class="menu-icon">♙</span>Потребители</a><a asp-controller="Roles" asp-action="Index"><span class="menu-icon">⚿</span>Роли</a> }
+                    <a asp-controller="Bookings" asp-action="Index">Резервации</a>
+                    @if (staff) { <a asp-controller="Reports" asp-action="Index">Справки</a> }
                 }
             </nav>
-            <div class="sidebar-bottom">
-                <button type="button" class="theme-toggle logout-button" aria-pressed="false" aria-label="Тъмен режим">
-                    <span aria-hidden="true" data-theme-icon>☾</span> <span data-theme-label>Тъмен режим</span>
-                </button>
-                @if (User.Identity?.IsAuthenticated == true)
+            <div class="header-actions">
+                <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Тъмен режим"><span aria-hidden="true" data-theme-icon>☾</span><span class="visually-hidden" data-theme-label>Тъмен режим</span></button>
+                @if (signedIn)
                 {
-                    <span class="signed-in-label">Влезли сте като</span>
-                    <span class="signed-in-email" title="@User.Identity.Name">@User.Identity.Name</span>
-                    <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="logout-button">Изход <span aria-hidden="true">↗</span></button></form>
+                    <details class="account-menu">
+                        <summary><span class="account-dot" aria-hidden="true">◎</span> Моят профил <span aria-hidden="true">⌄</span></summary>
+                        <div class="account-dropdown">
+                            <span class="account-email">@User.Identity!.Name</span>
+                            <a asp-controller="Account" asp-action="Profile">Моят профил</a>
+                            @if (staff) { <a asp-controller="Payments" asp-action="Index">Плащания</a> }
+                            @if (User.IsInRole(AppRoles.Admin))
+                            { <a asp-controller="Users" asp-action="Index">Потребители</a><a asp-controller="Roles" asp-action="Index">Управление на роли</a> }
+                            <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit">Изход ↗</button></form>
+                        </div>
+                    </details>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login" class="sidebar-auth">Вход</a>
-                    <a asp-controller="Account" asp-action="Register" class="sidebar-auth muted-auth">Регистрация</a>
+                    <a asp-controller="Account" asp-action="Login" class="header-login">Вход <span aria-hidden="true">↗</span></a>
+                    <a asp-controller="Account" asp-action="Register" class="btn primary header-register">Регистрация</a>
                 }
             </div>
-        </aside>
-        <div class="content-shell"><header class="mobile-header"><a class="brand" asp-controller="Home" asp-action="Index"><img src="~/img/brand-mark.svg" width="30" height="30" alt="" /> SportsBooking</a></header>
-            <main class="content" id="main-content">
-                @if (TempData["Success"] is string message) { <div class="alert success" role="status">@message</div> }
-                @if (TempData["Error"] is string error) { <div class="alert error" role="alert">@error</div> }
-                @RenderBody()
-            </main>
-            <footer class="footer">SportsBooking · ASP.NET Core MVC · .NET 9 · Microsoft SQL Server</footer>
-        </div>
+        </header>
+        <main class="content" id="main-content">
+            @if (TempData["Success"] is string message) { <div class="alert success" role="status">@message</div> }
+            @if (TempData["Error"] is string error) { <div class="alert error" role="alert">@error</div> }
+            @RenderBody()
+        </main>
+        <footer class="site-footer">
+            <div><a class="brand footer-brand" asp-controller="Home" asp-action="Index">SportsBooking<span class="brand-period">.</span></a><p>Игрища. Часове. Игра.</p></div>
+            <nav aria-label="Навигация в долната част"><a asp-controller="Fields" asp-action="Index">Намери игрище</a><a asp-controller="SportsCenters" asp-action="Index">Спортни центрове</a><a asp-controller="Account" asp-action="@(signedIn ? "Profile" : "Register")">@(signedIn ? "Моят профил" : "Регистрация")</a></nav>
+            <span class="footer-copyright">© @DateTime.Now.Year SportsBooking</span>
+        </footer>
     </div>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

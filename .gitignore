@@ -10,6 +10,16 @@
 **/*.db
 **/*.db-shm
 **/*.db-wal
+# SQL Server runtime files and backups (commit the SQL projects instead)
+*.mdf
+*.ndf
+*.ldf
+*.bak
+*.trn
+*.dacpac
+*.bacpac
+*.dbmdl
+*.jfm
 # Secret overrides (environment variables recommended)
 **/appsettings.Local.json
 **/secrets.json
@@ -18,3 +28,7 @@
 # Temp files
 *.tmp
 .DS_Store
+
+# Runtime error logs
+**/App_Data/Logs/
+**/TestResults/

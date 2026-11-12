@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SportsBooking">
-<defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#3d8cff"/><stop offset="1" stop-color="#6f62ee"/></linearGradient></defs>
-<rect width="64" height="64" rx="17" fill="url(#g)"/>
-<circle cx="32" cy="32" r="20" fill="none" stroke="white" stroke-width="3" opacity=".9"/>
-<path d="M32 17l8 6-3 10H27l-3-10 8-6ZM27 33l-10 5 6 10m14-15 10 5-6 10m-9-31v-5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 42" role="img" aria-label="SportsBooking">
+  <rect x="1" y="1" width="34" height="40" rx="3" fill="#a53d27"/>
+  <g fill="none" stroke="#fffefa" stroke-width="1.4">
+    <path d="M8 8h20v26H8zM8 21h20M12 8v26M24 8v26M12 14h12M12 28h12M18 14v14"/>
+  </g>
 </svg>

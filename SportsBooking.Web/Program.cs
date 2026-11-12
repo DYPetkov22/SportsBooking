@@ -1,4 +1,5 @@
 using System.Globalization;
+using SportsBooking.Web.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,18 @@ using SportsBooking.Web.Reporting;
 using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+var logDirectory = builder.Configuration["FileLogging:Directory"] ?? "App_Data/Logs";
+if (!Path.IsPathRooted(logDirectory)) logDirectory = Path.Combine(builder.Environment.ContentRootPath, logDirectory);
+builder.Logging.AddProvider(new FileErrorLoggerProvider(logDirectory));
 
 builder.Services.AddControllersWithViews(o =>
     o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 builder.Services.AddSingleton<LocalFileStorage>();
 builder.Services.AddScoped<ReportsService>();
+builder.Services.AddScoped<IPaymentStore, EfPaymentStore>();
+builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<IBookingAvailabilityStore, EfBookingAvailabilityStore>();
+builder.Services.AddScoped<BookingAvailabilityService>();
 // This university demo qualifies for the Community license. Check your license before commercial/public deployment.
 QuestPDF.Settings.License = LicenseType.Community;
 
@@ -57,9 +65,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
     app.UseHttpsRedirection();
 }
@@ -85,16 +94,25 @@ app.UseAuthorization();
 // Business schema is created with database/01_SportsBooking_SQLServer.sql.
 // Identity uses a separate, newly created SQL Server database (not SQLite).
 // EnsureCreated does not upgrade an existing schema: see docs/SQL_SERVER_SETUP_BG.md.
-using (var scope = app.Services.CreateScope())
+try
 {
-    var businessDb = scope.ServiceProvider.GetRequiredService<SportsBookingContext>();
-    if (!await businessDb.Database.CanConnectAsync())
-        throw new InvalidOperationException("Business SQL Server database is unavailable. Run database/01_SportsBooking_SQLServer.sql first.");
+    using (var scope = app.Services.CreateScope())
+    {
+        var businessDb = scope.ServiceProvider.GetRequiredService<SportsBookingContext>();
+        if (!await businessDb.Database.CanConnectAsync())
+            throw new InvalidOperationException("Business SQL Server database is unavailable. Run database/01_SportsBooking_SQLServer.sql first.");
 
-    await scope.ServiceProvider.GetRequiredService<IdentityContext>().Database.EnsureCreatedAsync();
+        await scope.ServiceProvider.GetRequiredService<IdentityContext>().Database.EnsureCreatedAsync();
+    }
+    await IdentitySeeder.InitializeAsync(app.Services, app.Configuration,
+        app.Environment.IsDevelopment() && app.Configuration.GetValue<bool>("DemoAccounts:Enabled"));
+
 }
-await IdentitySeeder.InitializeAsync(app.Services, app.Configuration,
-    app.Environment.IsDevelopment() && app.Configuration.GetValue<bool>("DemoAccounts:Enabled"));
+catch (Exception ex)
+{
+    app.Logger.LogCritical(ex, "Database initialization failed");
+    throw;
+}
 
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 app.Run();

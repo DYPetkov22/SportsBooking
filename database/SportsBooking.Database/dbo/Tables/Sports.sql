@@ -1,0 +1,6 @@
+CREATE TABLE dbo.Sports (
+    SportID INT IDENTITY(1,1) CONSTRAINT PK_Sports PRIMARY KEY,
+    SportName NVARCHAR(50) NOT NULL,
+    CONSTRAINT UQ_Sports_SportName UNIQUE (SportName)
+);
+GO

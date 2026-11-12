@@ -20,8 +20,11 @@ public class BookingsController : Controller
     private readonly SportsBookingContext _db;
     private readonly UserManager<ApplicationUser> _users;
     private readonly LocalFileStorage _storage;
-    public BookingsController(SportsBookingContext db, UserManager<ApplicationUser> users, LocalFileStorage storage)
-    { _db = db; _users = users; _storage = storage; }
+    private readonly BookingAvailabilityService _availability;
+    private readonly ILogger<BookingsController> _logger;
+    public BookingsController(SportsBookingContext db, UserManager<ApplicationUser> users, LocalFileStorage storage,
+        BookingAvailabilityService availability, ILogger<BookingsController> logger)
+    { _db = db; _users = users; _storage = storage; _availability = availability; _logger = logger; }
 
     private bool IsStaff => User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager);
     private async Task<int?> OwnProfileId()
@@ -115,11 +118,17 @@ public class BookingsController : Controller
         }
         catch (SqlException ex) when (ex.Number is 1205 or 1222)
         {
+            _logger.LogError(ex, "Booking transaction conflict");
+            // Dispose also handles a transaction already aborted by SQL Server (deadlock).
+            await transaction.DisposeAsync();
             ModelState.AddModelError("", "Друг потребител резервира в този момент. Опитайте отново.");
             return await InvalidForm(item);
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
+            _logger.LogError(ex, "Booking database operation failed");
+            // Dispose also handles a transaction already aborted by SQL Server (deadlock).
+            await transaction.DisposeAsync();
             ModelState.AddModelError("", "Резервацията не може да бъде запазена.");
             return await InvalidForm(item);
         }
@@ -162,11 +171,17 @@ public class BookingsController : Controller
         }
         catch (SqlException ex) when (ex.Number is 1205 or 1222)
         {
+            _logger.LogError(ex, "Booking transaction conflict");
+            // Dispose also handles a transaction already aborted by SQL Server (deadlock).
+            await transaction.DisposeAsync();
             ModelState.AddModelError("", "Има едновременна промяна. Опитайте отново.");
             return await InvalidForm(item);
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
+            _logger.LogError(ex, "Booking database operation failed");
+            // Dispose also handles a transaction already aborted by SQL Server (deadlock).
+            await transaction.DisposeAsync();
             ModelState.AddModelError("", "Резервацията не може да бъде редактирана.");
             return await InvalidForm(item);
         }
@@ -187,8 +202,9 @@ public class BookingsController : Controller
         if (item == null) return NotFound();
         _db.Bookings.Remove(item);
         try { await _db.SaveChangesAsync(); await _storage.DeleteAllBookingDocumentsAsync(id, HttpContext.RequestAborted); TempData["Success"] = "Резервацията е изтрита."; return RedirectToAction(nameof(Index)); }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
+            _logger.LogError(ex, "Booking database operation failed");
             ViewBag.DeleteError = "Първо изтрийте свързаното плащане.";
             return View("Delete", item);
         }
@@ -225,13 +241,8 @@ public class BookingsController : Controller
             ModelState.AddModelError(nameof(item.FieldID), "Няма такова игрище.");
     }
 
-    private async Task<bool> HasOverlap(Booking item, int excludeId = 0)
-    {
-        if (item.Status == "Отказана") return false;
-        return await _db.Bookings.AnyAsync(x => x.FieldID == item.FieldID &&
-            x.BookingDate == item.BookingDate && x.Status == "Активна" &&
-            x.BookingID != excludeId && x.StartTime < item.EndTime && x.EndTime > item.StartTime);
-    }
+    private Task<bool> HasOverlap(Booking item, int excludeId = 0) =>
+        _availability.HasOverlapAsync(item, excludeId);
     private async Task<IActionResult> InvalidForm(Booking item)
     { await FillLists(); return View(item.BookingID == 0 ? "Create" : "Edit", item); }
     private async Task FillLists()

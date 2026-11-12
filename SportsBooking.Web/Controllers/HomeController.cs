@@ -32,5 +32,10 @@ public class HomeController(SportsBookingContext db, UserManager<ApplicationUser
         return View();
     }
 
-    public IActionResult Error() => View();
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        Response.StatusCode = 500;
+        return View("~/Views/Errors/ServerError.cshtml", 500);
+    }
 }

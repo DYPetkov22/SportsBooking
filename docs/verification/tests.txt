@@ -1,0 +1,9 @@
+Test run for /workspace/scratch/7aec216c2083/source/SportsBooking/SportsBooking.Tests/bin/Debug/net9.0/SportsBooking.Tests.dll (.NETCoreApp,Version=v9.0)
+VSTest version 17.14.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+WARNING: Overwriting results file: /tmp/sportsbooking-results/assignment8-9.trx
+Results File: /tmp/sportsbooking-results/assignment8-9.trx
+
+Passed!  - Failed:     0, Passed:    38, Skipped:     0, Total:    38, Duration: 502 ms - SportsBooking.Tests.dll (net9.0)

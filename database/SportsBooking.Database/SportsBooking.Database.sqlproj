@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.Build.Sql/1.0.0">
+  <PropertyGroup>
+    <Name>SportsBooking.Database</Name>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Build Remove="PostDeployment\**\*.sql" />
+    <PostDeploy Include="PostDeployment\Seed.sql" />
+  </ItemGroup>
+</Project>

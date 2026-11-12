@@ -11,6 +11,7 @@
         const button = document.querySelector('.theme-toggle');
         if (!button) return;
         button.setAttribute('aria-pressed', String(dark));
+        button.setAttribute('aria-label', dark ? 'Светъл режим' : 'Тъмен режим');
         button.querySelector('[data-theme-icon]').textContent = dark ? '☀' : '☾';
         button.querySelector('[data-theme-label]').textContent = dark ? 'Светъл режим' : 'Тъмен режим';
     }

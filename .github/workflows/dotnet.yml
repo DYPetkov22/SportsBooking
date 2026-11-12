@@ -21,3 +21,15 @@ jobs:
         run: dotnet build SportsBooking.sln --configuration Release --no-restore
       - name: Static requirements audit (Python 3)
         run: python3 scripts/smoke_audit.py
+
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET 9 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Build SQL Server database projects
+        run: dotnet build database/SportsBooking.Database.sln --configuration Release

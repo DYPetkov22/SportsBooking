@@ -6,29 +6,51 @@
     var staff = User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager);
     var recent = ViewBag.RecentBookings as List<Booking> ?? new List<Booking>();
 }
-<section class="dashboard-intro"><div><p class="eyebrow dark">СПОРТНИ РЕЗЕРВАЦИИ</p><h1>Начало</h1><p class="muted">Игрища, резервации и спортни центрове на едно място.</p></div>
-@if (loggedIn) { <a class="btn primary" asp-controller="Bookings" asp-action="Create">+ Нова резервация</a> }
-else { <a class="btn primary" asp-controller="Account" asp-action="Register">Създай профил</a> }
+<section class="home-intro" aria-labelledby="hero-title">
+    <div class="intro-copy">
+        <p class="eyebrow">ИГРИЩА И СПОРТНИ ЦЕНТРОВЕ</p>
+        <h1 id="hero-title">Намери място<br />за следващата<br /><em>си игра.</em></h1>
+        <p class="intro-description">Футбол с приятели или час на корта — разгледай игрищата, сравни цените и избери къде ще играеш.</p>
+        <form class="home-search" method="get" asp-controller="Fields" asp-action="Index">
+            <label for="home-search">Какво ти се играе?</label>
+            <div class="search-controls"><input id="home-search" name="Search" maxlength="100" placeholder="Спорт, игрище или център" /><button class="btn primary" type="submit">Намери игрище <span aria-hidden="true">→</span></button></div>
+        </form>
+        <a class="browse-link" asp-controller="Fields" asp-action="Index">Разгледай всички игрища <span aria-hidden="true">→</span></a>
+    </div>
+    <figure class="intro-photo">
+        <img src="~/img/courts-hero.jpg" width="1920" height="1280" alt="Тенисист сервира на клей корт на открито." fetchpriority="high" />
+        <figcaption><span>За времето извън екрана.</span><span class="photo-caption-detail">SportsBooking / На корта</span></figcaption>
+    </figure>
 </section>
-<div class="welcome-banner"><div><p class="eyebrow">SPORTSBOOKING</p><h2>Твоето игрище. Твоят час.</h2><p>Намери подходящото игрище, избери дата и резервирай лесно. Управлявай всичко от един профил.</p><a class="btn light" asp-controller="Fields" asp-action="Index">Разгледай игрищата</a></div><img src="~/img/sports-hero.svg" alt="Илюстрация на спортно игрище" width="340" height="240" /></div>
-<div class="stats">
-<a asp-controller="Fields" asp-action="Index"><span class="stat-icon">▦</span><span>Активни игрища</span><strong>@ViewBag.FieldsCount</strong></a>
-<a asp-controller="Sports" asp-action="Index"><span class="stat-icon">◈</span><span>Видове спорт</span><strong>@ViewBag.SportsCount</strong></a>
-<a asp-controller="SportsCenters" asp-action="Index"><span class="stat-icon">⌂</span><span>Спортни центрове</span><strong>@ViewBag.CentersCount</strong></a>
-@if (loggedIn) { <a asp-controller="Bookings" asp-action="Index"><span class="stat-icon">◷</span><span>Активни резервации днес</span><strong>@ViewBag.BookingsToday</strong></a> }
-</div>
-@if (loggedIn && staff)
-{
-    <section class="report-cta"><div><p class="eyebrow">АНАЛИЗИ И ОТЧЕТИ</p><h2>Прегледай резултатите на SportsBooking</h2><p>Месечни резервации, приходи, предпочитани спортове и експорти в PDF или Excel.</p></div><a class="btn light" asp-controller="Reports" asp-action="Index">Отвори справките →</a></section>
-}
+<section class="club-directory" aria-label="Разгледай каталога">
+    <p class="directory-title">Намери своето място</p>
+    <a asp-controller="Fields" asp-action="Index"><strong>@ViewBag.FieldsCount</strong><span>Игрища</span><span aria-hidden="true">↗</span></a>
+    <a asp-controller="Sports" asp-action="Index"><strong>@ViewBag.SportsCount</strong><span>Спорта</span><span aria-hidden="true">↗</span></a>
+    <a asp-controller="SportsCenters" asp-action="Index"><strong>@ViewBag.CentersCount</strong><span>Центъра</span><span aria-hidden="true">↗</span></a>
+</section>
 @if (loggedIn)
 {
-    <section class="panel"><div class="page-heading"><div><h2>Последни резервации</h2><p class="muted">@(User.IsInRole(AppRoles.Admin) || User.IsInRole(AppRoles.Manager) ? "Последна активност в системата" : "Само вашите резервации")</p></div><a asp-controller="Bookings" asp-action="Index">Виж всички →</a></div>
-    <div class="table-scroll"><table><thead><tr><th>Потребител</th><th>Игрище</th><th>Дата</th><th>Статус</th></tr></thead><tbody>
-    @foreach (var booking in recent)
-    { <tr><td>@(booking.User?.FullName)</td><td>@(booking.Field?.FieldName)</td><td>@booking.BookingDate.ToString("dd.MM.yyyy")</td><td><span class="status @(booking.Status == "Активна" ? "active" : "cancelled")">@booking.Status</span></td></tr> }
-    </tbody></table></div>
-    @if (!recent.Any()) { <p class="empty">Все още нямате резервации.</p> }
+    <section class="booking-overview" aria-labelledby="recent-title">
+        <div class="section-heading"><div><p class="eyebrow">МОЯТА АКТИВНОСТ</p><h2 id="recent-title">Последни резервации</h2><p class="muted">@(staff ? "Последна активност в системата" : "Само вашите резервации") · Активни днес: @ViewBag.BookingsToday</p></div><div class="buttons"><a class="btn" asp-controller="Bookings" asp-action="Index">Виж всички</a><a class="btn primary" asp-controller="Bookings" asp-action="Create">Нова резервация</a></div></div>
+        <div class="table-scroll"><table><thead><tr><th>Потребител</th><th>Игрище</th><th>Дата</th><th>Статус</th></tr></thead><tbody>
+        @foreach (var booking in recent)
+        {
+            <tr><td>@(booking.User?.FullName)</td><td>@(booking.Field?.FieldName)</td><td>@booking.BookingDate.ToString("dd.MM.yyyy")</td><td><span class="status @(booking.Status == "Активна" ? "active" : "cancelled")">@booking.Status</span></td></tr>
+        }
+        </tbody></table>
+        @if (!recent.Any()) { <p class="empty">Все още нямате резервации.</p> }
+        </div>
     </section>
 }
-<section class="tip-strip"><span class="tip-icon">✓</span><div><strong>Защитен достъп</strong><p>Регистрация и вход чрез ASP.NET Core Identity; само упълномощени служители управляват спортните ресурси.</p></div></section>
+@if (loggedIn && staff)
+{
+    <aside class="staff-summary"><div><h2>Справки за твоя център</h2><p>Резервации, приходи и предпочитани спортове за избран период.</p></div><a class="btn" asp-controller="Reports" asp-action="Index">Отвори справките →</a></aside>
+}
+<section class="booking-guide" aria-labelledby="guide-title">
+    <div class="guide-heading"><p class="eyebrow">ПРЕДИ ДА ЗАПОЧНЕШ</p><h2 id="guide-title">Три стъпки.<br />После си на ход.</h2><p class="muted">Нужен ти е профил, за да направиш и следиш своите резервации.</p><a class="browse-link" asp-controller="Account" asp-action="@(loggedIn ? "Profile" : "Register")">@(loggedIn ? "Към моя профил" : "Създай профил") <span aria-hidden="true">→</span></a></div>
+    <ol class="guide-list">
+        <li><span class="guide-number" aria-hidden="true">01</span><div><h3>Избери игрище</h3><p>Филтрирай по спорт, център и цена. Виж подробностите за мястото.</p></div></li>
+        <li><span class="guide-number" aria-hidden="true">02</span><div><h3>Заяви дата и час</h3><p>Влез в профила си и попълни резервация. Ако часът е зает, ще получиш съобщение.</p></div></li>
+        <li><span class="guide-number" aria-hidden="true">03</span><div><h3>Уговори се с отбора</h3><p>Провери датата, часа и статуса в „Резервации“ и се подготви за игра.</p></div></li>
+    </ol>
+</section>

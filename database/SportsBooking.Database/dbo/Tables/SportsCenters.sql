@@ -1,0 +1,6 @@
+CREATE TABLE dbo.SportsCenters (
+    CenterID INT IDENTITY(1,1) CONSTRAINT PK_SportsCenters PRIMARY KEY,
+    CenterName NVARCHAR(100) NOT NULL,
+    City NVARCHAR(50) NOT NULL
+);
+GO

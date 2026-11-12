@@ -36,14 +36,43 @@ document.querySelectorAll('.demo-fill').forEach(function (button) {
     });
 });
 
-// Figma-style active item on the sidebar, including controller subroutes.
+// Active navigation item, including controller subroutes.
 (function () {
     const current = window.location.pathname.toLowerCase();
-    document.querySelectorAll('.side-links a').forEach(function (link) {
+    document.querySelectorAll('.site-nav a').forEach(function (link) {
         const href = new URL(link.href).pathname.toLowerCase();
         if ((href === '/' && current === '/') || (href !== '/' && (current === href || current.startsWith(href + '/')))) {
             link.classList.add('active');
             link.setAttribute('aria-current', 'page');
         }
+    });
+})();
+
+// Accessible mobile navigation; desktop navigation remains visible without JavaScript.
+(function () {
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('site-navigation');
+    if (!toggle || !nav) return;
+    function closeNavigation() {
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Отвори менюто');
+        nav.classList.remove('is-open');
+    }
+    toggle.addEventListener('click', function () {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Затвори менюто' : 'Отвори менюто');
+        nav.classList.toggle('is-open', open);
+    });
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        if (nav.classList.contains('is-open')) { closeNavigation(); toggle.focus(); }
+        const account = document.querySelector('.account-menu[open]');
+        if (account) { account.open = false; account.querySelector('summary').focus(); }
+    });
+    document.addEventListener('click', function (event) {
+        const account = document.querySelector('.account-menu[open]');
+        if (account && !account.contains(event.target)) account.open = false;
+        if (!nav.contains(event.target) && !toggle.contains(event.target)) closeNavigation();
     });
 })();

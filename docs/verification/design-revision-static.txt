@@ -1,0 +1,18 @@
+PAGE MARKUP PASS home
+PAGE MARKUP PASS admin-home
+PAGE MARKUP PASS fields
+PAGE MARKUP PASS account
+PAGE MARKUP PASS register
+PAGE MARKUP PASS reports
+STATIC STYLE AND OFFLINE ASSETS PASS
+INPUT COMPARISON PASS: 141 files unchanged; 9 files changed
+SportsBooking/README.md
+SportsBooking/SportsBooking.Web/Views/Home/Index.cshtml
+SportsBooking/SportsBooking.Web/Views/Shared/_Layout.cshtml
+SportsBooking/SportsBooking.Web/wwwroot/css/design.css
+SportsBooking/SportsBooking.Web/wwwroot/img/brand-mark.svg
+SportsBooking/SportsBooking.Web/wwwroot/js/theme.js
+SportsBooking/docs/03_Design_Brief.md
+SportsBooking/docs/17_Design_Refresh.md
+SportsBooking/docs/Design_Preview.html
+ZIP INTEGRITY PASS: 155 files; 1565898 bytes

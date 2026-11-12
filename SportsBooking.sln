@@ -1,18 +1,59 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsBooking.Web", "SportsBooking.Web\SportsBooking.Web.csproj", "{84235B75-4193-422C-B2D3-73AC046C79FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsBooking.Tests", "SportsBooking.Tests\SportsBooking.Tests.csproj", "{B8B9B176-FBD3-400C-907A-D314B139155C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{3436A0A3-0364-4906-9385-3F49DE8FD675}"
+	ProjectSection(SolutionItems) = preProject
+		database\README.md = database\README.md
+		database\SportsBooking.Database.sln = database\SportsBooking.Database.sln
+		database\Deploy.ps1 = database\Deploy.ps1
+		database\01_SportsBooking_SQLServer.sql = database\01_SportsBooking_SQLServer.sql
+		database\03_Verify_SQLServer.sql = database\03_Verify_SQLServer.sql
+		database\04_Upgrade_Reports.sql = database\04_Upgrade_Reports.sql
+		database\05_Verify_DemoAccounts.sql = database\05_Verify_DemoAccounts.sql
+	EndProjectSection
+EndProject
 Global
-    GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Debug|Any CPU = Debug|Any CPU
-        Release|Any CPU = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {84235B75-4193-422C-B2D3-73AC046C79FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {84235B75-4193-422C-B2D3-73AC046C79FC}.Release|Any CPU.Build.0 = Release|Any CPU
-    EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|x64.Build.0 = Debug|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Debug|x86.Build.0 = Debug|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Release|x64.ActiveCfg = Release|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Release|x64.Build.0 = Release|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Release|x86.ActiveCfg = Release|Any CPU
+		{84235B75-4193-422C-B2D3-73AC046C79FC}.Release|x86.Build.0 = Release|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Release|x64.Build.0 = Release|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B8B9B176-FBD3-400C-907A-D314B139155C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 EndGlobal
