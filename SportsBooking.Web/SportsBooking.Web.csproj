@@ -11,4 +11,7 @@
     <PackageReference Include="ClosedXML" Version="0.105.1" />
     <PackageReference Include="QuestPDF" Version="2026.9.1" />
   </ItemGroup>
+<ItemGroup>
+    <ProjectReference Include="../SportsBooking.Data/SportsBooking.Data.csproj" />
+  </ItemGroup>
 </Project>

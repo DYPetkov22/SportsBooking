@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using SportsBooking.Data;
 using SportsBooking.Web.Security;
 using SportsBooking.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,14 @@ public class FieldsController : Controller
 {
     private readonly SportsBookingContext _db;
     private readonly LocalFileStorage _storage;
-    public FieldsController(SportsBookingContext db, LocalFileStorage storage) { _db = db; _storage = storage; }
+    private readonly IFieldCatalog _catalog;
+
+    public FieldsController(SportsBookingContext db, LocalFileStorage storage, IFieldCatalog catalog)
+    {
+        _db = db;
+        _storage = storage;
+        _catalog = catalog;
+    }
 
     [AllowAnonymous]
     public async Task<IActionResult> Index([FromQuery] FieldSearchViewModel filters, CancellationToken ct)
@@ -55,7 +63,7 @@ public class FieldsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Details(int id)
     {
-        var item = await _db.Fields.Include(x => x.Center).Include(x => x.Sport).AsNoTracking().FirstOrDefaultAsync(x => x.FieldID == id);
+        var item = await _catalog.FindAsync(id, HttpContext.RequestAborted);
         if (item == null) return NotFound();
         ViewBag.Images = await _storage.ListFieldImagesAsync(id, HttpContext.RequestAborted);
         return View(item);
@@ -142,7 +150,7 @@ public class FieldsController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        var item = await _db.Fields.Include(x => x.Center).Include(x => x.Sport).AsNoTracking().FirstOrDefaultAsync(x => x.FieldID == id);
+        var item = await _catalog.FindAsync(id, HttpContext.RequestAborted);
         return item == null ? NotFound() : View(item);
     }
 

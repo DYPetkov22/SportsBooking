@@ -55,3 +55,23 @@ dotnet test SportsBooking.sln
 ## Обновен дизайн
 
 Топъл светъл фон, керемиденочервен акцент, спортна фотография и горна навигация. Офлайн преглед: отворете `docs/Design_Preview.html` в браузър. Промените, проверките и връзката с диаграмите са описани в [Design revision](docs/18_Design_Revision.md).
+
+## REST API и конзолен клиент (.NET 9)
+
+API използва бизнес базата от `database/01_SportsBooking_SQLServer.sql`. При различен SQL Server задайте `ConnectionStrings:SportsBooking` в `SportsBooking.Api/appsettings.json`. От директорията на решението стартирайте API:
+
+```shell
+dotnet run --project SportsBooking.Api
+```
+
+Във втори терминал изпълнете:
+
+```shell
+dotnet run --project SportsBooking.Client
+dotnet run --project SportsBooking.Client -- page 2
+dotnet run --project SportsBooking.Client -- field 1
+```
+
+Клиентът чете JSON от `http://localhost:5180`. За друг адрес задайте `SPORTSBOOKING_API_URL`. Публичният каталог поддържа `GET /api/fields?page=1` (20 терена на страница) и `GET /api/fields/{id}` (404 при липсващ терен). Административните операции остават в MVC приложението.
+
+Repository Pattern е приложен чрез `IFieldCatalog`. MVC страницата за детайли и API използват общата EF Core заявка в `FieldCatalog`. Dependency Injection подава реализацията за текущата заявка. Същият подход при плащанията позволява тестовете да заменят хранилището с Moq.

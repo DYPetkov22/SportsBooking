@@ -20,6 +20,7 @@ builder.Services.AddControllersWithViews(o =>
     o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 builder.Services.AddSingleton<LocalFileStorage>();
 builder.Services.AddScoped<ReportsService>();
+builder.Services.AddScoped<SportsBooking.Data.IFieldCatalog, SportsBooking.Data.FieldCatalog>();
 builder.Services.AddScoped<IPaymentStore, EfPaymentStore>();
 builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<IBookingAvailabilityStore, EfBookingAvailabilityStore>();
